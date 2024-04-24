@@ -1,0 +1,179 @@
+/* BARRA DE NAVEGACIÓN SUPERIOR */
+
+.logo {
+    display: block;
+    margin: auto;
+    width: 17%;
+    margin-left: 43%;
+    min-width: 200px;
+}
+
+.logo-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.navbar1 {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin: 0;
+}
+
+.usuario {
+    width: 30px;
+    margin-right: 20px;
+    fill: #831f3f;
+}
+
+.dropdown-item {
+    color: rgb(148, 16, 44);
+    font-weight: 500;
+}
+
+.dropdown-item:hover {
+    color: #94102c;
+    font-weight: 500;
+}
+
+
+/* BARRA DE NAVEGACIÓN DE PÁGINAS */
+
+.navbar2 {
+    width: 100%;
+    display: flex;
+    flex-wrap: inherit;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.navbar-expand-lg {
+    background-color: rgb(148, 16, 44);
+    display: flex;
+    justify-content: space-around;
+    min-height: 55px;
+    flex: 1;
+}
+
+.nav-link {
+    text-decoration: none;
+    text-align: center;
+    color: rgb(255, 255, 255);
+    padding: 15px;
+    transition: 0.3s;
+    min-width: 130px;
+    flex: 1;
+}
+
+.nav-link:hover {
+    background-color: rgb(148, 55, 75);
+    color: white;
+}
+
+.navbar-toggler {
+    padding: 7px;
+    border: 1px solid rgba(255, 255, 255, 0.575);
+    border-radius: 6px;
+}
+
+.navbar-toggler-icon {
+    background-image: url('/assets/iconos/nav-toggler.svg');
+    width: 30px;
+}
+
+
+@media (max-width: 990px) {
+    .navbar2 {
+        flex-flow: column;
+        margin: 7px 15px;
+        align-items: flex-end;
+    }
+    
+    .nav-link {
+        text-align: end;
+        width: 100%;
+    }
+    
+    header {
+        margin-bottom: 5px;
+    }
+}
+
+
+/* TÍTULOS DE LAS PESTAÑAS */
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.titulo-pestaña {
+    display: flex;
+    justify-content: center;
+    color: #831f3f;
+    margin-top: 30px;
+    margin-bottom: 40px;
+    font-size: xx-large;
+}
+
+
+/* FOOTER */
+
+footer {
+    background-color: #9f94862f;
+    padding: 10px 20px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-around;
+}
+
+footer .logo-footer {
+    padding: 0px 20px;
+}
+
+footer .info {
+    display: flex;
+    flex-direction: column;
+    margin-top: auto;
+    margin-bottom: auto;
+    padding: 15px 20px;
+}
+
+footer h5 {
+    color: #831f3f;
+}
+
+footer ul,
+footer p {
+    margin-bottom: 0px;
+}
+
+.contacto {
+    text-decoration: none;
+    color: black;
+}
+
+.red-social {
+    display: inline-block;
+    height: 50px;
+    margin: 10px;
+}
+
+.red-social:hover {
+    background-color: #831f3f31;
+    border-radius: 11px;
+}
+
+@media (max-width: 768px) {
+    .logo {
+        margin-left: 70px;
+    }
+
+    .usuario {
+        margin-right: 70px;
+    }
+}

@@ -1,0 +1,133 @@
+<h1 class="titulo-pestaña">CONTACTO</h1>
+<div>
+    <section class="divider">
+        <div class="container pt-40">
+            <div class="row contact">
+                <div id="mapa">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d13620.984117135802!2d-64.1715523!3d-31.4073469!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9432a2a5c249b39d%3A0xba46e840b28b1e38!2zRXN0dWRpbyBkZSBEYW56YSBNYXLDrWEgSm9zw6kgTsO6w7Fleg!5e0!3m2!1ses-419!2sar!4v1701984134250!5m2!1ses-419!2sar"
+                        width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+
+                <div id="direccion">
+                    <p class="edmjn">Estudio de Danza María José Núñez</p>
+                    <p>Ibarbalz 1052, Barrio General Paz</p>
+                    <p class="datos">Teléfono: <a href="tel: 3515329273">+54 9 351 532-9273</a></p>
+                    <p class="datos">Email: <a href="mailto: estudiodanzamjn@gmail.com">estudiodanzamjn@gmail.com</a>
+                    </p>
+                </div>
+
+                <div id="formulario">
+                    <form id="miFormulario" method="post" action="/api/contacto/formulario">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label for="nombre" class="form-label">Nombre</label>
+                                    <input id="nombre" name="nombre" type="text" class="form-control" placeholder="Ana"
+                                        required>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label for="apellido" class="form-label">Apellido</label>
+                                    <input id="apellido" name="apellido" type="text" class="form-control"
+                                        placeholder="García" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group mb-3">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input id="email" name="email" class="form-control" type="email"
+                                        placeholder="ana.garcia@example.com" required>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6 mb-3">
+                                <div class="form-group">
+                                    <label for="telefono" class="form-label">Teléfono</label>
+                                    <input id="telefono" name="telefono" class="form-control" type="text"
+                                        placeholder="3511234567" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            {{!-- <div class="col-sm-6">
+                                <div class="form-group mb-3">
+                                    <select name="provincia" id="provincia">
+                                        <option value="1">Córdoba</option>
+                                        <option value="2">Mendoza</option>
+                                        <option value="3">Buenos Aires</option>
+                                    </select>
+                                </div>
+                            </div> --}}
+                            <div class="col-sm-6 mb-3">
+                                <div class="form-group">
+                                    <label for="provincia" class="form-label">Provincia</label>
+                                    <input id="provincia" name="provincia" class="form-control" type="text"
+                                        placeholder="Ingrese números del 1 al 3" required>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 mb-3">
+                                <div class="form-group">
+                                    <select name="select">
+                                        <option value="Córdoba" selected>Córdoba</option>
+                                        <option value="Buenos Aires">Buenos Aires</option>
+                                        <option value="Mendoza">Mendoza</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <br>
+
+                        <div class="form-group">
+                            <label for="consulta" class="form-label">Consulta</label>
+                            <textarea id="consulta" name="consulta" class="form-control" rows="5"
+                                placeholder="Deje aquí su consulta y nos comunicaremos con usted lo más pronto posible."
+                                required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="submit" class="btn mt-2" id="enviarConsulta" value="Enviar Consulta"></input>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section>
+        <p id="title-redes">Encontranos en nuestras redes sociales!</p>
+        <div class="redes">
+            <div>
+                <a target="_blank" href="https://www.instagram.com/estudiodanzamjn" title="Instagram"
+                    class="p-0 text-body-secondary">
+                    <img class="red-social" src="/assets/iconos/ig.png" alt=""></a>
+                <p id="subtitle-redes">Seguinos en Instagram</p>
+            </div>
+
+            <div>
+                <a target="_blank" href="https://www.facebook.com/estudiodanzamjn" title="Facebook"
+                    class="p-0 text-body-secondary">
+                    <img class="red-social" src="/assets/iconos/fb.png" alt=""></a>
+                <p id="subtitle-redes">Seguinos en Facebook</p>
+            </div>
+
+            <div>
+                <a target="_blank" href="https://api.whatsapp.com/send/?phone=5493515329273" title="Whatsapp"
+                    class="p-0 text-body-secondary">
+                    <img class="red-social" src="/assets/iconos/ws.png" alt=""></a>
+                <p id="subtitle-redes">Contactanos por Whatsapp</p>
+            </div>
+
+        </div>
+        </ul>
+    </section>

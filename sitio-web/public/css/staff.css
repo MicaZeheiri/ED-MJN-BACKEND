@@ -1,0 +1,14 @@
+.img-staff {
+    width: 80%;
+    max-width: 300px;
+    border-color: #831f3f !important;
+    border-width: 4px !important;
+    border-radius: 12px !important;
+    margin: 20px;
+}
+
+h4 {
+    color: #831f3f;
+    font-size: x-large;
+    font-weight: 600;
+}

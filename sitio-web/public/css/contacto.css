@@ -1,0 +1,83 @@
+#mapa {
+    grid-area: mapa;
+}
+
+#direccion {
+    grid-area: direccion;
+}
+
+#formulario {
+    grid-area: formulario;
+}
+
+@media (min-width: 768px) {
+    .contact {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr;
+        grid-template-areas:
+            "mapa formulario"
+            "direccion none";
+        grid-column-gap: 25px;
+        grid-row-gap: 20px;
+    }
+}
+
+.edmjn {
+    color: #831f3f;
+    font-weight: 600;
+    font-size: x-large;
+}
+
+.datos {
+    font-weight: 600;
+}
+
+.datos>a {
+    text-decoration: none;
+    color: black;
+    font-weight: 400;
+}
+
+.form-label {
+    font-weight: 600;
+}
+
+#enviarConsulta {
+    float: left;
+    background-color: #831f3f;
+    color: white;
+}
+
+#enviarConsulta:hover {
+    background-color: rgb(148, 55, 75);
+}
+
+#title-redes {
+    color: #831f3f;
+    font-weight: 600;
+    font-size: x-large;
+    text-align: center;
+    margin-top: 25px;
+}
+
+.redes {
+    display: flex;
+    justify-content: center;
+    margin: 10px;
+    text-align: center;
+}
+
+.redes div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-bottom: 50px;
+    margin-top: 10px;
+}
+
+#subtitle-redes {
+    font-weight: 500;
+}

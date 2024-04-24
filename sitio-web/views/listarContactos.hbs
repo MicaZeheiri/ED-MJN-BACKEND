@@ -1,0 +1,108 @@
+<div class="container mt-5 text-center">
+    <table class="table table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Apellido</th>
+                <th scope="col">Teléfono</th>
+                <th scope="col">Email</th>
+                <th scope="col">Consulta</th>
+                <th scope="col">Provincia</th>
+            </tr>
+        </thead>
+        <tbody class="table-group-divider">
+            {{#each persona}}
+            <tr>
+                <th scope="row">{{idPersona}}</th>
+                <td>{{nombre}}</td>
+                <td>{{apellido}}</td>
+                <td>{{telefono}}</td>
+                <td>{{email}}</td>
+                <td>{{consulta}}</td>
+                <td>{{nombreProvincia}}</td>
+            </tr>
+            {{/each}}
+
+            {{#unless persona}}
+            <tr>
+                <td colspan="7">No hay contactos para mostrar</td>
+            </tr>
+            {{/unless}}
+        </tbody>
+    </table>
+
+
+    {{!-- MODAL PARA CONFIRMAR CAMBIOS --}}
+
+    <form action="/api/contacto/borrar" method="post">
+        <div class="modal" id="deleteModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Eliminar Datos</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <label for="idPersona">Seleccione el ID para eliminar</label>
+                        <input type="number" id="idPersona" name="idPersona">
+                    </div>
+                    <div class="modal-body">
+                        <p>¿Está seguro de eliminar los datos?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+    {{!-- modal para actualizar contactos --}}
+    <form action="/api/contacto/actualizar" method="post">
+        <div class="modal" id="editModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Actualizar Datos</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <label for="idPersona">Seleccione el ID para Actualizar</label>
+                        <input type="number" id="idPersona" name="idPersona">
+                    </div>
+                    <div class="modal-body">
+                        <p>¿Está segura de actualizar el usuario?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-danger">Actualizar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+    {{!-- BOTONES PARA ELIMINAR O CAMBIAR DATOS --}}
+    <div class="container text-center" id="miBoton">
+        <button type="button" class="btn btn-danger w-25 delete">Eliminar Datos</button>
+        <button type="button" class="btn btn-warning w-25 edit">Actualizar Datos</button>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script>
+        // modal del delete
+        $('#miBoton').on('click', '.delete', function () {
+            $('#deleteModal').modal('show');
+        })
+
+        //modal del edit
+        $('#miBoton').on('click', '.edit', function () {
+            $('#editModal').modal('show');
+        })
+    </script>
+
+</div>

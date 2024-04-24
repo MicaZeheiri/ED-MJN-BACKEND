@@ -1,0 +1,16 @@
+#primer-ritmo {
+    margin-top: 0px;
+}
+
+h4 {
+    color: #831f3f;
+    margin-top: 70px;
+}
+
+.table-dark {
+    --bs-table-bg: transparent;
+}
+
+thead {
+    background-color: rgb(148, 16, 44);
+}

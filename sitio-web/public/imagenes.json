@@ -1,0 +1,338 @@
+[
+    {
+        "id": 1,
+        "ruta": "../assets/fotogaleria/1.jpg"
+    },
+    {
+        "id": 2,
+        "ruta": "../assets/fotogaleria/2.jpg"
+    },
+    {
+        "id": 3,
+        "ruta": "../assets/fotogaleria/3.jpg"
+    },
+    {
+        "id": 4,
+        "ruta": "../assets/fotogaleria/4.jpg"
+    },
+    {
+        "id": 5,
+        "ruta": "../assets/fotogaleria/5.jpg"
+    },
+    {
+        "id": 6,
+        "ruta": "../assets/fotogaleria/6.jpg"
+    },
+    {
+        "id": 7,
+        "ruta": "../assets/fotogaleria/7.jpg"
+    },
+    {
+        "id": 8,
+        "ruta": "../assets/fotogaleria/8.jpg"
+    },
+    {
+        "id": 9,
+        "ruta": "../assets/fotogaleria/9.jpg"
+    },
+    {
+        "id": 10,
+        "ruta": "../assets/fotogaleria/10.jpg"
+    },
+    {
+        "id": 11,
+        "ruta": "../assets/fotogaleria/11.jpg"
+    },
+    {
+        "id": 12,
+        "ruta": "../assets/fotogaleria/12.jpg"
+    },
+    {
+        "id": 13,
+        "ruta": "../assets/fotogaleria/13.jpg"
+    },
+    {
+        "id": 14,
+        "ruta": "../assets/fotogaleria/14.jpg"
+    },
+    {
+        "id": 15,
+        "ruta": "../assets/fotogaleria/15.jpg"
+    },
+    {
+        "id": 16,
+        "ruta": "../assets/fotogaleria/16.jpg"
+    },
+    {
+        "id": 17,
+        "ruta": "../assets/fotogaleria/17.jpg"
+    },
+    {
+        "id": 18,
+        "ruta": "../assets/fotogaleria/18.jpg"
+    },
+    {
+        "id": 19,
+        "ruta": "../assets/fotogaleria/19.jpg"
+    },
+    {
+        "id": 20,
+        "ruta": "../assets/fotogaleria/20.jpg"
+    },
+    {
+        "id": 21,
+        "ruta": "../assets/fotogaleria/21.jpg"
+    },
+    {
+        "id": 22,
+        "ruta": "../assets/fotogaleria/22.jpg"
+    },
+    {
+        "id": 23,
+        "ruta": "../assets/fotogaleria/23.jpg"
+    },
+    {
+        "id": 24,
+        "ruta": "../assets/fotogaleria/24.jpg"
+    },
+    {
+        "id": 25,
+        "ruta": "../assets/fotogaleria/25.jpg"
+    },
+    {
+        "id": 26,
+        "ruta": "../assets/fotogaleria/26.jpg"
+    },
+    {
+        "id": 27,
+        "ruta": "../assets/fotogaleria/27.jpg"
+    },
+    {
+        "id": 28,
+        "ruta": "../assets/fotogaleria/28.jpg"
+    },
+    {
+        "id": 29,
+        "ruta": "../assets/fotogaleria/29.jpg"
+    },
+    {
+        "id": 30,
+        "ruta": "../assets/fotogaleria/30.jpg"
+    },
+    {
+        "id": 31,
+        "ruta": "../assets/fotogaleria/31.jpg"
+    },
+    {
+        "id": 32,
+        "ruta": "../assets/fotogaleria/32.jpg"
+    },
+    {
+        "id": 33,
+        "ruta": "../assets/fotogaleria/33.jpg"
+    },
+    {
+        "id": 34,
+        "ruta": "../assets/fotogaleria/34.jpg"
+    },
+    {
+        "id": 35,
+        "ruta": "../assets/fotogaleria/35.jpg"
+    },
+    {
+        "id": 36,
+        "ruta": "../assets/fotogaleria/36.jpg"
+    },
+    {
+        "id": 37,
+        "ruta": "../assets/fotogaleria/37.jpg"
+    },
+    {
+        "id": 38,
+        "ruta": "../assets/fotogaleria/38.jpg"
+    },
+    {
+        "id": 39,
+        "ruta": "../assets/fotogaleria/39.jpg"
+    },
+    {
+        "id": 40,
+        "ruta": "../assets/fotogaleria/40.jpg"
+    },
+    {
+        "id": 41,
+        "ruta": "../assets/fotogaleria/41.jpg"
+    },
+    {
+        "id": 42,
+        "ruta": "../assets/fotogaleria/42.jpg"
+    },
+    {
+        "id": 43,
+        "ruta": "../assets/fotogaleria/43.jpg"
+    },
+    {
+        "id": 44,
+        "ruta": "../assets/fotogaleria/44.jpg"
+    },
+    {
+        "id": 45,
+        "ruta": "../assets/fotogaleria/45.jpg"
+    },
+    {
+        "id": 46,
+        "ruta": "../assets/fotogaleria/46.jpg"
+    },
+    {
+        "id": 47,
+        "ruta": "../assets/fotogaleria/47.jpg"
+    },
+    {
+        "id": 48,
+        "ruta": "../assets/fotogaleria/48.jpg"
+    },
+    {
+        "id": 49,
+        "ruta": "../assets/fotogaleria/49.jpg"
+    },
+    {
+        "id": 50,
+        "ruta": "../assets/fotogaleria/50.jpg"
+    },
+    {
+        "id": 51,
+        "ruta": "../assets/fotogaleria/51.jpg"
+    },
+    {
+        "id": 52,
+        "ruta": "../assets/fotogaleria/52.jpg"
+    },
+    {
+        "id": 53,
+        "ruta": "../assets/fotogaleria/53.jpg"
+    },
+    {
+        "id": 54,
+        "ruta": "../assets/fotogaleria/54.jpg"
+    },
+    {
+        "id": 55,
+        "ruta": "../assets/fotogaleria/55.jpg"
+    },
+    {
+        "id": 56,
+        "ruta": "../assets/fotogaleria/56.jpg"
+    },
+    {
+        "id": 57,
+        "ruta": "../assets/fotogaleria/57.jpg"
+    },
+    {
+        "id": 58,
+        "ruta": "../assets/fotogaleria/58.jpg"
+    },
+    {
+        "id": 59,
+        "ruta": "../assets/fotogaleria/59.jpg"
+    },
+    {
+        "id": 60,
+        "ruta": "../assets/fotogaleria/60.jpg"
+    },
+    {
+        "id": 61,
+        "ruta": "../assets/fotogaleria/61.jpg"
+    },
+    {
+        "id": 62,
+        "ruta": "../assets/fotogaleria/62.jpg"
+    },
+    {
+        "id": 63,
+        "ruta": "../assets/fotogaleria/63.jpg"
+    },
+    {
+        "id": 64,
+        "ruta": "../assets/fotogaleria/64.jpg"
+    },
+    {
+        "id": 65,
+        "ruta": "../assets/fotogaleria/65.jpg"
+    },
+    {
+        "id": 66,
+        "ruta": "../assets/fotogaleria/66.jpg"
+    },
+    {
+        "id": 67,
+        "ruta": "../assets/fotogaleria/67.jpg"
+    },
+    {
+        "id": 68,
+        "ruta": "../assets/fotogaleria/68.jpg"
+    },
+    {
+        "id": 69,
+        "ruta": "../assets/fotogaleria/69.jpg"
+    },
+    {
+        "id": 70,
+        "ruta": "../assets/fotogaleria/70.jpg"
+    },
+    {
+        "id": 71,
+        "ruta": "../assets/fotogaleria/71.jpg"
+    },
+    {
+        "id": 72,
+        "ruta": "../assets/fotogaleria/72.jpg"
+    },
+    {
+        "id": 73,
+        "ruta": "../assets/fotogaleria/73.jpg"
+    },
+    {
+        "id": 74,
+        "ruta": "../assets/fotogaleria/74.jpg"
+    },
+    {
+        "id": 75,
+        "ruta": "../assets/fotogaleria/75.jpg"
+    },
+    {
+        "id": 76,
+        "ruta": "../assets/fotogaleria/76.jpg"
+    },
+    {
+        "id": 77,
+        "ruta": "../assets/fotogaleria/77.jpg"
+    },
+    {
+        "id": 78,
+        "ruta": "../assets/fotogaleria/78.jpg"
+    },
+    {
+        "id": 79,
+        "ruta": "../assets/fotogaleria/79.jpg"
+    },
+    {
+        "id": 80,
+        "ruta": "../assets/fotogaleria/80.jpg"
+    },
+    {
+        "id": 81,
+        "ruta": "../assets/fotogaleria/81.jpg"
+    },
+    {
+        "id": 82,
+        "ruta": "../assets/fotogaleria/82.jpg"
+    },
+    {
+        "id": 83,
+        "ruta": "../assets/fotogaleria/83.jpg"
+    },
+    {
+        "id": 84,
+        "ruta": "../assets/fotogaleria/84.jpg"
+    }
+]

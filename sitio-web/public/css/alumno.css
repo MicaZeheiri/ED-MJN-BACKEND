@@ -1,0 +1,22 @@
+li::marker {
+    color: rgb(148, 16, 44);
+}
+
+section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.lista {
+    margin-top: 20px;
+}
+
+.anio {
+    color: rgb(148, 16, 44);
+    font-size: x-large;
+    font-weight: 600;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
