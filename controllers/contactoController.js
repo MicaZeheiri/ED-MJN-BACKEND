@@ -1,5 +1,5 @@
 // IMPORTAMOS LA CONEXIÓN A LA BASE DE DATOS
-const connection = require('../../models/config');
+const connection = require('../models/config');
 
 const paginaContacto = (req, res) => {
     res.render('contacto', {

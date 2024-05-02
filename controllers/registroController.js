@@ -1,4 +1,4 @@
-const connection = require('../../models/config');
+const connection = require('../models/config');
 const { validationResult } = require('express-validator');
 const bcrypt = require('bcrypt');
 

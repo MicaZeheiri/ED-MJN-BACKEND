@@ -1,5 +1,5 @@
 
-const app = require('./sitio-web/index');    
+const app = require('./index');    
 const dotenv = require('dotenv');
 dotenv.config();
 
