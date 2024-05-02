@@ -1,3 +1,4 @@
+const connection = require('../../models/config');
 const { validationResult } = require('express-validator');
 const bcrypt = require('bcrypt');
 
@@ -9,7 +10,10 @@ const paginaLogin = (req, res) => {
 }
 
 const loginUsuario = async (req, res) => {
+
     const controlError = validationResult(req);
+    console.log('primer error: ', controlError);
+
 
     const { dni, password } = req.body;
 
@@ -19,27 +23,45 @@ const loginUsuario = async (req, res) => {
         })
     }
 
+    console.log('PUNTO DE CONTROL 0');
+
+
     try {
 
         let usuario
         const sqlQuery = `SELECT alumnos.dniAlumno, alumnos.password 
                             FROM alumnos 
                             WHERE dniAlumno = ${dni}`
-        await connection.query(sqlQuery, (err, result) => {
-            if (err) {
-                console.log('Error al leer los datos');
-                console.log(err);
-                res.send('Error al leer los datos');
-            } else {
-                usuario = result[0];
-                console.log('El usuario es: ', usuario);
-            }
+
+        usuario = await new Promise((resolve, reject) => {
+            connection.query(sqlQuery, (err, result) => {
+                if (err) {
+                    console.log('Error al leer los datos');
+                    console.log(err);
+                    reject(err);
+                } else {
+                    resolve(result[0]);
+                }
+            });
         });
 
+        console.log('PUNTO DE CONTROL 1');
+
         if (!usuario) {
-            alert('El usuario no existe, por favor regístrese')
+            res.render('error', {
+                errores: 'Su DNI no está registrado en nuestra base de datos de alumnos. Por favor diríjase a Ibarbalz 1052, Barrio General Paz para efectuar su inscripción.'
+            });
         }
-        
+
+        if (usuario.dniAlumno && usuario.password === null) {
+            res.render('error', {
+                errores: 'El usuario no existe, por favor regístrese'
+            });
+        }
+        console.log('PUNTO DE CONTROL 2');
+
+
+
         console.log(usuario.dni, usuario.password);
         const match = await bcrypt.compare(password, usuario.password)
 
@@ -51,7 +73,11 @@ const loginUsuario = async (req, res) => {
 
 
     } catch (error) {
-        
+        console.log('PUNTO DE CONTROL 5');
+        console.log(error);
+        res.render('error', {
+            errores: '2. ERROR EN LOS DATOS INGRESADOS'
+        })
     }
 
 

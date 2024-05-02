@@ -8,11 +8,11 @@ const login = () => {
         return;
     }
 
-    if (dni == '43523433' && password == 'edmjn') {
+/*     if (dni == '43523433' && password == 'edmjn') {
         alert('Bienvenido alumno.');
         sessionStorage.setItem('usuario', JSON.stringify(dni));
         location.href = '/alumno'
     } else {
         alert('DNI o contraseña incorrectos');
-    }
+    } */
 }
