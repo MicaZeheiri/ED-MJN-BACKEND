@@ -1,16 +1,14 @@
-<h1 class="titulo-pestaña">INSCRIPCIÓN DE ALUMNOS</h1>
+<h1 class="titulo-pestaña">AGREGAR PROFESOR</h1>
 <main>
     <div class="container" style="max-width: 800px;">
-        <form method="post" action="/admin/inscripciones/alumno">
+        <form method="post" action="/admin/profesores/nuevoProfesor">
             <fieldset>
-                <legend>Alumno</legend>
                 <div class="row">
                     <div class="mb-3">
                         <label for="dni" class="form-label">D.N.I.</label>
                         <input id="dni" name="dni" class="form-control" type="number" placeholder="D.N.I." required>
                     </div>
                 </div>
-
                 <div class="row">
                     <div class="mb-3">
                         <label for="nombre" class="form-label">Nombre</label>
@@ -21,12 +19,6 @@
                     <div class="mb-3">
                         <label for="apellido" class="form-label">Apellido</label>
                         <input type="text" class="form-control" name="apellido" placeholder="Apellido" required>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="mb-3">
-                        <label for="fechaNacimiento" class="form-label">Fecha de nacimiento</label>
-                        <input id="fechaNacimiento" name="fechaNacimiento" class="form-control" type="date" required>
                     </div>
                 </div>
                 <div class="row">
@@ -43,10 +35,16 @@
                             placeholder="ejemplo@dominio.com" required>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="mb-3">
+                        <label for="precioXalumno" class="form-label">Precio a cobrar por alumno</label>
+                        <input id="precioXalumno" name="precioXalumno" class="form-control" type="text" placeholder="Precio por alumno" required>
+                    </div>
+                </div>
             </fieldset>
 
             <div class="form-group">
-                <input type="submit" class="btn mt-2 float-end mb-3" id="enviarConsulta" value="Inscribir alumno"></input>
+                <input type="submit" class="btn mt-2 float-end mb-3" id="enviarConsulta" value="Agregar profesor"></input>
             </div>
         </form>
     </div>

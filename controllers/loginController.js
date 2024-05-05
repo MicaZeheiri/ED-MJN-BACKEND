@@ -76,6 +76,11 @@ const loginUsuario = async (req, res) => {
             console.log(usuario.dni, usuario.password);
             const match = await bcrypt.compare(password, usuario.password)
 
+            req.session.usuario = {
+                dniUsuario: usuario.dni,
+                tipoUsuario: 'alumno'
+            };
+
             res.json({
                 msg: 'Usuario logueado correctamente',
                 usuario: usuario,
@@ -109,12 +114,22 @@ const loginUsuario = async (req, res) => {
             console.log(usuario.dni, usuario.password);
             const match = await bcrypt.compare(password, usuario.password)
 
+            if (match) {
+                req.session.usuario = {
+                    dniUsuario: usuario.dni,
+                    tipoUsuario: 'administrador'
+                };
+                res.redirect('/admin/inscripciones/alumno')
+            } else {
+                res.redirect('/login')
+            }
+
             // renderizar pags de admin
-            res.json({
+/*             res.json({
                 msg: 'Usuario logueado correctamente',
                 usuario: usuario,
                 match: match
-            })
+            }) */
 
         }
 
