@@ -14,10 +14,16 @@ const loginRouter = require('./routes/loginRouter');
 const alumnoRouter = require('./routes/alumnoRouter');
 const registroRouter = require('./routes/registroRouter');
 
+const inscripcionesRouter = require('./routes/inscripcionesRouter');
+
+
 
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'views'));
 hbs.registerPartials(path.join(__dirname, 'views/partials'));
+hbs.registerHelper('ifEqual', function(val1, val2, options) {
+    return val1 === val2 ? options.fn(this) : options.inverse(this);
+});
 
 
 app.use(express.json());
@@ -34,6 +40,9 @@ app.use('/fotogaleria', fotogaleriaRouter);
 app.use('/login', loginRouter);
 app.use('/alumno', alumnoRouter);
 app.use('/registro', registroRouter);
+
+app.use('/admin/inscripciones', inscripcionesRouter);
+
 
 
 app.get('/', (req, res) => {

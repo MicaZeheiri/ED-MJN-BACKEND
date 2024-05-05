@@ -1,0 +1,53 @@
+<h1 class="titulo-pestaña">INSCRIPCIÓN DE ALUMNOS</h1>
+<main>
+    <div class="container" style="max-width: 800px;">
+        <form method="post" action="/admin/inscripciones/alumno">
+            <fieldset>
+                <legend>Alumno</legend>
+                <div class="row">
+                    <div class="mb-3">
+                        <label for="dni" class="form-label">D.N.I.</label>
+                        <input id="dni" name="dni" class="form-control" type="number" placeholder="D.N.I." required onblur="buscarAlumnoPorDNI()">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" name="nombre" placeholder="Nombre" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="mb-3">
+                        <label for="apellido" class="form-label">Apellido</label>
+                        <input type="text" class="form-control" name="apellido" placeholder="Apellido" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="mb-3">
+                        <label for="fechaNacimiento" class="form-label">Fecha de nacimiento</label>
+                        <input id="fechaNacimiento" name="fechaNacimiento" class="form-control" type="date" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="mb-3">
+                        <label for="telefono" class="form-label">Teléfono</label>
+                        <input id="telefono" name="telefono" class="form-control" type="text" placeholder="Teléfono"
+                            required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input id="email" name="email" class="form-control" type="email"
+                            placeholder="ejemplo@dominio.com" required>
+                    </div>
+                </div>
+            </fieldset>
+
+            <div class="form-group">
+                <input type="submit" class="btn mt-2 float-end mb-3" id="enviarConsulta" value="Inscribir alumno"></input>
+            </div>
+        </form>
+    </div>
+</main>
