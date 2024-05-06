@@ -38,13 +38,18 @@
                 <div class="row">
                     <div class="mb-3">
                         <label for="precioXalumno" class="form-label">Precio a cobrar por alumno</label>
-                        <input id="precioXalumno" name="precioXalumno" class="form-control" type="text" placeholder="Precio por alumno" required>
+                        <div class="input-group">
+                            <span class="input-group-text" id="inputGroupPrepend">$</span>
+                            <input id="precioXalumno" name="precioXalumno" class="form-control" type="text"
+                                placeholder="Precio por alumno" required>
+                        </div>
                     </div>
                 </div>
             </fieldset>
 
             <div class="form-group">
-                <input type="submit" class="btn mt-2 float-end mb-3" id="enviarConsulta" value="Agregar profesor"></input>
+                <input type="submit" class="btn mt-2 float-end mb-3" id="enviarConsulta"
+                    value="Agregar profesor"></input>
             </div>
         </form>
     </div>

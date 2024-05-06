@@ -1,0 +1,215 @@
+{{!-- <h1 class="titulo-pestaña">AGREGAR NUEVA CLASE</h1>
+<main>
+    <div class="container" style="max-width: 800px;">
+        <form method="post" action="/admin/clases/nuevaClase">
+            <fieldset>
+                <div class="row">
+                    <div class="col">
+                        <label for="ritmo" class="form-label mt-3">Ritmo: </label>
+                        <select name="ritmo" id="ritmo" class="form-select">
+                            <option selected>-- Seleccione un ritmo --</option>
+                            {{#each ritmo}}
+                            <option value="{{codRitmo}}">{{nombreRitmo}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label for="nivel" class="form-label mt-3">Nivel: </label>
+                        <select name="nivel" id="nivel" class="form-select">
+                            <option selected>-- Seleccione un nivel --</option>
+                            {{#each nivel}}
+                            <option value="{{codNivel}}">{{nombreNivel}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label for="profesor" class="form-label mt-3">Profesor: </label>
+                        <select name="profesor" id="profesor" class="form-select">
+                            <option selected>-- Seleccione un profesor --</option>
+                            {{#each profesor}}
+                            <option value="{{dniProfesor}}">{{nombreProfesor}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                </div>
+                <div class="row horarios">
+                    <div class="col">
+                        <label for="dia" class="form-label mt-3">Día: </label>
+                        <select name="dia" id="dia" class="form-select">
+                            <option selected>-- Seleccione un día --</option>
+                            {{#each dia}}
+                            <option value="{{codDia}}">{{nombreDia}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <div class="col">
+                        <label class="form-label mt-3" for="horaInicio">Desde: </label>
+                        <input id="horaInicio" name="horaInicio" class="form-control" type="time" required>
+                    </div>
+                    <div class="col">
+                        <label class="form-label mt-3" for="horaFin">Hasta: </label>
+                        <input id="horaFin" name="horaFin" class="form-control" type="time" required>
+                    </div>
+                </div>
+
+                <div id="dias-extra"></div>
+
+                <button type="button" id="btn-agregar-dia" class="float-end mt-3 mb-3">+ Agregar otro día</button>
+            </fieldset>
+
+            <div class="form-group">
+                <input type="submit" class="btn mt-2 float-end mt-3 mb-3" id="enviarConsulta"
+                    value="Agregar clase"></input>
+            </div>
+        </form>
+    </div>
+</main> --}}
+
+
+
+
+
+<h1 class="titulo-pestaña">AGREGAR NUEVA CLASE</h1>
+<main>
+    <div class="container" style="max-width: 800px;">
+        <form method="post" action="/admin/clases/nuevaClase" class="needs-validation" novalidate>
+            <fieldset>
+                <div class="row">
+                    <div class="col">
+                        <label for="ritmo" class="form-label mt-3">Ritmo: </label>
+                        <select name="ritmo" id="ritmo" class="form-select" required>
+                            <option selected value="">-- Seleccione un ritmo --</option>
+                            {{#each ritmo}}
+                            <option value="{{codRitmo}}">{{nombreRitmo}}</option>
+                            {{/each}}
+                        </select>
+                        <div class="invalid-feedback">
+                            Porfavor seleccione un ritmo.
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label for="nivel" class="form-label mt-3">Nivel: </label>
+                        <select name="nivel" id="nivel" class="form-select" required>
+                            <option selected value="">-- Seleccione un nivel --</option>
+                            {{#each nivel}}
+                            <option value="{{codNivel}}">{{nombreNivel}}</option>
+                            {{/each}}
+                        </select>
+                        <div class="invalid-feedback">
+                            Porfavor seleccione un nivel.
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label for="profesor" class="form-label mt-3">Profesor: </label>
+                        <select name="profesor" id="profesor" class="form-select" required>
+                            <option selected value="">-- Seleccione un profesor --</option>
+                            {{#each profesor}}
+                            <option value="{{dniProfesor}}">{{nombreProfesor}}</option>
+                            {{/each}}
+                        </select>
+                        <div class="invalid-feedback">
+                            Porfavor seleccione un profesor.
+                        </div>
+                    </div>
+                </div>
+                <div class="row horarios">
+                    <div class="col">
+                        <label for="dia" class="form-label mt-3">Día: </label>
+                        <select name="dia" id="dia" class="form-select" required>
+                            <option selected value="">-- Seleccione un día --</option>
+                            {{#each dia}}
+                            <option value="{{codDia}}">{{nombreDia}}</option>
+                            {{/each}}
+                        </select>
+                        <div class="invalid-feedback">
+                            Porfavor seleccione un día.
+                        </div>
+                    </div>
+                    <div class="col">
+                        <label class="form-label mt-3" for="horaInicio">Desde: </label>
+                        <input id="horaInicio" name="horaInicio" class="form-control" type="time" required>
+
+                    </div>
+                    <div class="col">
+                        <label class="form-label mt-3" for="horaFin">Hasta: </label>
+                        <input id="horaFin" name="horaFin" class="form-control" type="time" required>
+                        <div class="invalid-feedback">
+                            La hora desde debe ser menor a la hora hasta.
+                        </div>
+                    </div>
+                </div>
+
+                <div id="dias-extra"></div>
+
+                <button type="button" id="btn-agregar-dia" class="float-end mt-3 mb-3">+ Agregar otro día</button>
+            </fieldset>
+
+            <div class="form-group">
+                <input type="submit" class="btn mt-2 float-end mt-3 mb-3" id="enviarConsulta"
+                    value="Agregar clase"></input>
+            </div>
+        </form>
+    </div>
+</main>
+
+
+<script>
+    (() => {
+        'use strict'
+
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        const forms = document.querySelectorAll('.needs-validation')
+
+        // Loop over them and prevent submission
+        Array.from(forms).forEach(form => {
+            form.addEventListener('submit', event => {
+                if (!form.checkValidity()) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                }
+
+                form.classList.add('was-validated')
+            }, false)
+        })
+    })()
+</script>
+
+
+
+<script>
+    const btnAgregarDia = document.getElementById('btn-agregar-dia');
+    const contenedorDiasExtra = document.getElementById('dias-extra');
+
+    btnAgregarDia.addEventListener('click', () => {
+        const nuevaFila = document.createElement('div');
+        nuevaFila.classList.add('row', 'horarios');
+        nuevaFila.innerHTML = `
+        <div class="col">
+            <label for="dia" class="form-label mt-3">Día: </label>
+            <select name="dia" class="form-select">
+                <option selected>-- Seleccione un día --</option>
+                {{#each dia}}
+                <option value="{{codDia}}">{{nombreDia}}</option>
+                {{/each}}
+            </select>
+        </div>
+        <div class="col">
+            <label class="form-label mt-3" for="horaInicio">Desde: </label>
+            <input name="horaInicio" class="form-control" type="time" required>
+        </div>
+        <div class="col">
+            <label class="form-label mt-3" for="horaFin">Hasta: </label>
+            <input name="horaFin" class="form-control" type="time" required>
+        </div>
+    `;
+        contenedorDiasExtra.appendChild(nuevaFila);
+    });
+</script>

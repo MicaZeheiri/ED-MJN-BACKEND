@@ -20,7 +20,8 @@ const verificarAutenticacion = require('./middlewares/autenticacionAdmin');
 const verificarRutaAdmin = require('./middlewares/verificarRutaAdmin');
 
 const inscripcionesRouter = require('./routes/inscripcionesRouter');
-const profesoresRouter = require('./routes/profesoresRouter'); 
+const profesoresRouter = require('./routes/profesoresRouter');
+const adminClasesRouter = require('./routes/adminClasesRouter'); 
 
 
 
@@ -56,6 +57,7 @@ app.use('/admin', verificarAutenticacion);
 app.use(verificarRutaAdmin);
 app.use('/admin/inscripciones', inscripcionesRouter);
 app.use('/admin/profesores', profesoresRouter);
+app.use('/admin/clases', adminClasesRouter);
 
 
 
