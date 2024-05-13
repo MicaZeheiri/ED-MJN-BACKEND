@@ -1,5 +1,128 @@
-<a href="/admin/clases/nuevaClase">
-    <button type="submit" class="btn mt-3 float-end" id="enviarConsulta">
-        + Nueva clase
-    </button>
-</a>
+<div class="container mt-5 text-center">
+    <table class="table table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th class="align-middle" scope="col">Ritmo</th>
+                <th class="align-middle" scope="col">Nivel</th>
+                <th class="align-middle" scope="col">Profesor</th>
+                <th class="align-middle" scope="col">Horarios</th>
+                <th class="align-middle" scope="col">Cantidad de alumnos</th>
+                <th class="align-middle" scope="col">Editar</th>
+                <th class="align-middle" scope="col">Eliminar</th>
+            </tr>
+        </thead>
+        <tbody class="table-group-divider">
+            {{#each clases}}
+            <tr>
+                <td class="align-middle" scope="row">{{nombreRitmo}}</td>
+                <td class="align-middle">{{nombreNivel}}</td>
+                <td class="align-middle">{{profesor}}</td>
+                <td class="align-middle">{{horarios}}</td>
+                <td class="align-middle">{{cantAlumnos}}</td>
+                <td class="align-middle"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                        fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                        <path
+                            d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                        <path fill-rule="evenodd"
+                            d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+                    </svg></i></td>
+                <td class="align-middle"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                        fill="currentColor" class="bi bi-x-square" viewBox="0 0 16 16">
+                        <path
+                            d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
+                        <path
+                            d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708" />
+                    </svg></i></td>
+            </tr>
+            {{/each}}
+
+            {{#unless clases}}
+            <tr>
+                <td colspan="7">No hay clases para mostrar</td>
+            </tr>
+            {{/unless}}
+        </tbody>
+    </table>
+
+    {{!-- Lleva a nueva clase --}}
+    <a href="/admin/clases/nuevaClase">
+        <button type="submit" class="btn mt-3 mb-3 float-end" id="enviarConsulta">
+            + Nueva clase
+        </button>
+    </a>
+
+
+
+    {{!-- MODAL PARA CONFIRMAR CAMBIOS --}}
+
+    <form action="/api/contacto/borrar" method="post">
+        <div class="modal" id="deleteModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Eliminar Datos</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <label for="idPersona">Seleccione el ID para eliminar</label>
+                        <input type="number" id="idPersona" name="idPersona">
+                    </div>
+                    <div class="modal-body">
+                        <p>¿Está seguro de eliminar los datos?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+    {{!-- modal para actualizar contactos --}}
+    <form action="/api/contacto/actualizar" method="post">
+        <div class="modal" id="editModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Actualizar Datos</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <label for="idPersona">Seleccione el ID para Actualizar</label>
+                        <input type="number" id="idPersona" name="idPersona">
+                    </div>
+                    <div class="modal-body">
+                        <p>¿Está segura de actualizar el usuario?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-danger">Actualizar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+    {{!-- BOTONES PARA ELIMINAR O CAMBIAR DATOS --}}
+    <div class="container text-center" id="miBoton">
+        <button type="button" class="btn btn-danger w-25 delete">Eliminar Datos</button>
+        <button type="button" class="btn btn-warning w-25 edit">Actualizar Datos</button>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script>
+        // modal del delete
+        $('#miBoton').on('click', '.delete', function () {
+            $('#deleteModal').modal('show');
+        })
+
+        //modal del edit
+        $('#miBoton').on('click', '.edit', function () {
+            $('#editModal').modal('show');
+        })
+    </script>
+
+</div>

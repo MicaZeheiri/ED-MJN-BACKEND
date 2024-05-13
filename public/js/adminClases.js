@@ -2,8 +2,6 @@ const btnAgregarDia = document.getElementById('btn-agregar-dia');
 const contenedorDiasExtra = document.getElementById('dias-extra');
 
 btnAgregarDia.addEventListener('click', () => {
-    contHorarios++;
-
     const nuevaFila = document.createElement('div');
     nuevaFila.classList.add('row', 'horarios');
 
@@ -28,3 +26,4 @@ btnAgregarDia.addEventListener('click', () => {
     `;
     contenedorDiasExtra.appendChild(nuevaFila);
 });
+

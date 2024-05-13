@@ -100,6 +100,7 @@ const loginUsuario = async (req, res) => {
                         reject(err);
                     } else {
                         resolve(result[0]);
+                        //console.log('resultado: '+ JSON.stringify(result));
                     }
                 });
             });
@@ -111,25 +112,19 @@ const loginUsuario = async (req, res) => {
                 });
             }
 
-            console.log(usuario.dni, usuario.password);
+
+            console.log('USUARIO: ', usuario.dniAdmin, usuario.password);
             const match = await bcrypt.compare(password, usuario.password)
 
             if (match) {
                 req.session.usuario = {
-                    dniUsuario: usuario.dni,
+                    dniUsuario: usuario.dniAdmin,
                     tipoUsuario: 'administrador'
                 };
                 res.redirect('/admin/inscripciones/alumno')
             } else {
                 res.redirect('/login')
             }
-
-            // renderizar pags de admin
-/*             res.json({
-                msg: 'Usuario logueado correctamente',
-                usuario: usuario,
-                match: match
-            }) */
 
         }
 

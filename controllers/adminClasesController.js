@@ -1,10 +1,68 @@
 const connection = require('../models/config');
 
+
 const paginaListarClases = (req, res) => {
-    res.render('listarClasesAdmin', {
-        style: ['clases.css', 'contacto.css']
+    const sqlQuery = `
+        SELECT 
+            r.nombreRitmo, 
+            n.nombreNivel, 
+            GROUP_CONCAT(DISTINCT CONCAT(p.nombreProfesor, ' ', p.apellidoProfesor)) AS profesor,
+            GROUP_CONCAT(DISTINCT CONCAT(d.nombreDia, ' de ', DATE_FORMAT(h.horaInicio, '%H:%i'), ' a ', DATE_FORMAT(h.horaFin, '%H:%i')) SEPARATOR ' y ') AS horarios,
+            ROUND(COUNT(ca.dniAlumno) / COUNT(DISTINCT CONCAT(h.dia))) AS cantAlumnos
+        FROM 
+            clases c
+        JOIN 
+            profesores p ON c.profesor = p.dniProfesor 
+        JOIN 
+            ritmos r ON c.ritmo = r.codRitmo 
+        JOIN 
+            niveles n ON c.nivel = n.codNivel 
+        JOIN 
+            horarios h ON h.ritmo = c.ritmo AND h.nivel = c.nivel
+        JOIN 
+            dias d ON h.dia = d.codDia
+        LEFT JOIN
+            ClasePorAlumno ca ON c.ritmo = ca.ritmo AND c.nivel = ca.nivel
+        GROUP BY 
+            r.nombreRitmo, n.nombreNivel
+        ORDER BY 
+            r.nombreRitmo;`;
+    connection.query(sqlQuery, (err, result) => {
+        if (err) {
+            console.log('Error al LEER los datos');
+            console.log(err);
+            res.send('Error al LEER los datos');
+        } else {
+            console.log('Datos LEIDOS correctamente');
+            console.log(result);
+
+            res.render('listarClasesAdmin', {
+                style: ['clases.css', 'contacto.css'],
+                clases: result
+            });
+        }
     });
 }
+
+
+const paginaBorrarClase = (req, res) => {
+    const id = req.body.idPersona;
+    console.log(id);
+
+    const sqlQuery = `DELETE FROM persona WHERE idPersona = ${id}`;
+    connection.query(sqlQuery, (err, result) => {
+        if (err) {
+            console.log('Error al borrar datos');
+            console.log(err);
+            res.send('Error al borrar datos');
+        } else {
+            res.render('contacto', {
+                style: ['contacto.css'],
+            });
+        }
+    });
+}
+
 
 const paginaNuevaClase = (req, res) => {
     const sqlQuery1 = `SELECT profesores.dniProfesor, profesores.nombreProfesor FROM Profesores`;
@@ -56,7 +114,15 @@ const formNuevaClase = (req, res) => {
     const dias = req.body.dia;
     const horasInicio = req.body.horaInicio;
     const horasFin = req.body.horaFin;
-
+    for (let i = 0; i < horasInicio.length; i++) {
+        if (horasInicio[i] < horasFin[i]) {
+            console.log('HORAS: ', horasInicio[i], horasFin[i]);
+            console.log('LAS HORAS BIEN ', true);
+        } else{
+            console.log('HORAS: ', horasInicio[i], horasFin[i]);
+            console.log('LAS HORAS BIEN ', false);
+        }
+    }
 
     console.log('============================================================');
     console.log('DATOS: ', req.body);
