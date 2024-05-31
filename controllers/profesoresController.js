@@ -157,7 +157,22 @@ const formEditarProfesor = (req, res) => {
 };
 
 const paginaEliminarProfesor = (req, res) => {
+    const dniProfesor = req.query.dniProfesor;
+    console.log('PROFE A BORRAR: ', dniProfesor);
 
+    const sqlQuery = `DELETE FROM profesores WHERE dniProfesor = ${dniProfesor}`;
+
+    query(sqlQuery)
+        .then(result => {
+            res.render('datosCargados', {
+                style: ['index.css']
+            });
+        })
+        .catch(err => {
+            console.log('Error al LEER los datos');
+            console.log(err);
+            res.send('Error al LEER los datos');
+        });
 };
 
 
