@@ -22,6 +22,7 @@ const verificarRutaAdmin = require('./middlewares/verificarRutaAdmin');
 const inscripcionesRouter = require('./routes/inscripcionesRouter');
 const profesoresRouter = require('./routes/profesoresRouter');
 const adminClasesRouter = require('./routes/adminClasesRouter'); 
+const adminAlumnosRouter = require('./routes/adminAlumnosRouter'); 
 
 
 
@@ -58,6 +59,7 @@ app.use(verificarRutaAdmin);
 app.use('/admin/inscripciones', inscripcionesRouter);
 app.use('/admin/profesores', profesoresRouter);
 app.use('/admin/clases', adminClasesRouter);
+app.use('/admin/alumnos', adminAlumnosRouter);
 
 
 

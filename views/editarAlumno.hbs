@@ -1,0 +1,56 @@
+<h1 class="titulo-pestaña">EDITAR ALUMNO</h1>
+<main>
+    <div class="container" style="max-width: 800px;">
+        <form method="post" action="/admin/alumnos/editarAlumno">
+            <fieldset>
+                <input class="invisible" name="dniOriginal" value="{{ alumno.dniAlumno }}">
+                <div class="row">
+                    <div class="mb-3">
+                        <label for="dni" class="form-label">D.N.I.</label>
+                        <input id="dni" name="dni" class="form-control" type="number"
+                            value="{{ alumno.dniAlumno }}" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" name="nombre" value="{{ alumno.nombreAlumno }}"
+                            required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="mb-3">
+                        <label for="apellido" class="form-label">Apellido</label>
+                        <input type="text" class="form-control" name="apellido" value="{{ alumno.apellidoAlumno }}"
+                            required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="mb-3">
+                        <label for="fechaNacimiento" class="form-label">Fecha de nacimiento</label>
+                        <input id="fechaNacimiento" name="fechaNacimiento" class="form-control" type="date" value="{{ alumno.fechaNacimiento }}" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="mb-3">
+                        <label for="telefono" class="form-label">Teléfono</label>
+                        <input id="telefono" name="telefono" class="form-control" type="text"
+                            value="{{ alumno.telefonoAlumno }}" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input id="email" name="email" class="form-control" type="email"
+                            value="{{ alumno.emailAlumno }}" required>
+                    </div>
+                </div>
+            </fieldset>
+
+            <div class="form-group">
+                <input type="submit" class="btn mt-2 float-end mb-3" id="enviarConsulta"
+                    value="Confirmar cambios"></input>
+            </div>
+        </form>
+    </div>
+</main>

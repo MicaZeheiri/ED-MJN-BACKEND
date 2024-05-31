@@ -78,21 +78,6 @@ const formNuevoProfesor = (req, res) => {
             console.log(err);
             res.send('Error al LEER los datos');
         });
-
-    /*     connection.query(sqlQuery, datosSql, (err, result) => {
-            if (err) {
-                console.log('Error al insertar los datos');
-                console.log(err);
-                res.send('Error al insertar los datos')
-            } else {
-                console.log('Datos ingresados correctamente');
-                console.log(result);
-                res.render('datosCargados', {
-                    style: ['index.css']
-                });
-            }
-        }); */
-
 }
 
 const paginaEditarProfesor = (req, res) => {
