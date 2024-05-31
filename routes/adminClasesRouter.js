@@ -11,11 +11,9 @@ const { paginaListarClases,
 router.get('/', paginaListarClases);
 
 router.get('/nuevaClase', paginaNuevaClase);
-
 router.post('/nuevaClase', formNuevaClase);
 
 router.get('/editarClase', paginaEditarClase);
-
 router.post('/editarClase', formEditarClase);
 
 router.get('/eliminarClase', pagEliminarClase);

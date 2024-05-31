@@ -1,0 +1,63 @@
+<h1 class="titulo-pestaña">EDITAR PROFESOR</h1>
+<main>
+    <div class="container" style="max-width: 800px;">
+        <form method="post" action="/admin/profesores/editarProfesor">
+            <fieldset>
+                <input class="invisible" name="dniOriginal" value="{{ profesor.dniProfesor }}">
+                <div class="row">
+                    <div class="mb-3">
+                        <label for="dni" class="form-label">D.N.I.</label>
+                        <input id="dni" name="dni" class="form-control" type="number"
+                            value="{{ profesor.dniProfesor }}" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" name="nombre" value="{{ profesor.nombreProfesor }}"
+                            required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="mb-3">
+                        <label for="apellido" class="form-label">Apellido</label>
+                        <input type="text" class="form-control" name="apellido" value="{{ profesor.apellidoProfesor }}"
+                            required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="mb-3">
+                        <label for="telefono" class="form-label">Teléfono</label>
+                        <input id="telefono" name="telefono" class="form-control" type="text"
+                            value="{{ profesor.telefonoProfesor }}" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input id="email" name="email" class="form-control" type="email"
+                            value="{{ profesor.emailProfesor }}" required>
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <div class="row">
+                    <div class="mb-3">
+                        <label for="precioXalumno" class="form-label">Precio a cobrar por alumno</label>
+                        <div class="input-group">
+                            <span class="input-group-text" id="inputGroupPrepend">$</span>
+                            <input id="precioXalumno" name="precioXalumno" class="form-control" type="text"
+                                value="{{ profesor.precioXalumno }}" required>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+
+            <div class="form-group">
+                <input type="submit" class="btn mt-2 float-end mb-3" id="enviarConsulta"
+                    value="Confirmar cambios"></input>
+            </div>
+        </form>
+    </div>
+</main>

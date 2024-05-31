@@ -1,5 +1,46 @@
-<a href="/admin/profesores/nuevoProfesor">
-    <button type="submit" class="btn mt-3 float-end" id="enviarConsulta">
-        + Nuevo profesor
-    </button>
-</a>
+<div class="container mt-5 text-center">
+    <table class="table table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th class="align-middle" scope="col">Nombre</th>
+                <th class="align-middle" scope="col">DNI</th>
+                <th class="align-middle" scope="col">Teléfono</th>
+                <th class="align-middle" scope="col">Email</th>
+                <th class="align-middle" scope="col">Editar</th>
+                <th class="align-middle" scope="col">Eliminar</th>
+            </tr>
+        </thead>
+        <tbody class="table-group-divider">
+            {{#each profesores}}
+            <tr>
+                <td class="align-middle" scope="row">{{nombreCompletoProfesor}}</td>
+                <td class="align-middle">{{dniProfesor}}</td>
+                <td class="align-middle">{{telefonoProfesor}}</td>
+                <td class="align-middle">{{emailProfesor}}</td>
+                <td class="align-middle">
+                    <a href="/admin/profesores/editarProfesor?dniProfesor={{dniProfesor}}">
+                        <i class="bi bi-pencil-square text-warning"></i>
+                    </a>
+                </td>
+                <td class="align-middle text-danger">
+                    <a href="/admin/profesores/eliminarProfesor?dniProfesor={{dniProfesor}}">
+                        <i class="bi bi-x-square text-danger"></i>
+                    </a>
+                </td>
+            </tr>
+            {{/each}}
+
+            {{#unless profesores}}
+            <tr>
+                <td colspan="7">No hay profesores para mostrar</td>
+            </tr>
+            {{/unless}}
+        </tbody>
+    </table>
+
+    <a href="/admin/profesores/nuevoProfesor">
+        <button type="submit" class="btn mt-3 float-end" id="enviarConsulta">
+            + Nuevo profesor
+        </button>
+    </a>
+</div>

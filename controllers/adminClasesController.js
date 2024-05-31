@@ -41,16 +41,18 @@ const paginaListarClases = (req, res) => {
         ORDER BY 
             r.nombreRitmo;`;
 
-    query(sqlQuery).then(result => {
-        res.render('listarClasesAdmin', {
-            style: ['clases.css', 'contacto.css'],
-            clases: result
+    query(sqlQuery)
+        .then(result => {
+            res.render('listarClasesAdmin', {
+                style: ['clases.css', 'contacto.css'],
+                clases: result
+            });
+        })
+        .catch(err => {
+            console.log('Error al LEER los datos');
+            console.log(err);
+            res.send('Error al LEER los datos');
         });
-    }).catch(err => {
-        console.log('Error al LEER los datos');
-        console.log(err);
-        res.send('Error al LEER los datos');
-    });
 
     /* connection.query(sqlQuery, (err, result) => {
         if (err) {
@@ -399,26 +401,6 @@ const pagEliminarClase = (req, res) => {
     });
 
 
-}
-
-
-
-const paginaBorrarClase = (req, res) => {
-    const id = req.body.idPersona;
-    console.log(id);
-
-    const sqlQuery = `DELETE FROM persona WHERE idPersona = ${id}`;
-    connection.query(sqlQuery, (err, result) => {
-        if (err) {
-            console.log('Error al borrar datos');
-            console.log(err);
-            res.send('Error al borrar datos');
-        } else {
-            res.render('contacto', {
-                style: ['contacto.css'],
-            });
-        }
-    });
 }
 
 
