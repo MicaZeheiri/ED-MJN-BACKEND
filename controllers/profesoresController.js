@@ -102,7 +102,7 @@ const paginaEditarProfesor = (req, res) => {
         const profesor = results[0][0];
         const sueldo = results[1];
         res.render('editarProfesor', {
-            style: ['contacto.css'],
+            style: ['contacto.css', 'clases.css'],
             profesor: profesor,
             sueldo: sueldo
         });

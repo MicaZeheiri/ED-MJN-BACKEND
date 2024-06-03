@@ -45,7 +45,7 @@ app.use(express.static(path.join(__dirname, '/public')));
 app.use(cors());
 app.use(morgan('dev'));
 
-app.use('/api/contacto', contactoRouter);
+app.use('/contacto', contactoRouter);
 app.use('/staff', staffRouter);
 app.use('/clases', clasesRouter);
 app.use('/alquilerSalas', alquilerSalasRouter);
