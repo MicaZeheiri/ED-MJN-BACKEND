@@ -73,19 +73,27 @@ const loginUsuario = async (req, res) => {
             console.log('PUNTO DE CONTROL 2');
 
             // El alumno está registrado como usuario
-            console.log(usuario.dni, usuario.password);
+            console.log(usuario.dniAlumno, usuario.password);
             const match = await bcrypt.compare(password, usuario.password)
 
-            req.session.usuario = {
-                dniUsuario: usuario.dni,
-                tipoUsuario: 'alumno'
-            };
+            if (match) {
+                req.session.usuario = {
+                    dniUsuario: usuario.dniAlumno,
+                    tipoUsuario: 'alumno'
+                };
+                res.redirect('/alumno')
+            } else {
+                res.redirect('/login')
+            }
 
-            res.json({
+
+            console.log('Usuario logueado: ', usuario, match);
+
+            /* res.json({
                 msg: 'Usuario logueado correctamente',
                 usuario: usuario,
                 match: match
-            })
+            }) */
 
         } else {
 

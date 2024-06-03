@@ -107,13 +107,15 @@ const paginaNuevaClase = (req, res) => {
 };
 
 
-const formNuevaClase = (req, res) => {
+const formNuevaClase = async (req, res) => {
     const ritmo = parseInt(req.body.ritmo);
     const nivel = parseInt(req.body.nivel);
     const profesor = parseInt(req.body.profesor);
     const dias = req.body.dia;
     const horasInicio = req.body.horaInicio;
     const horasFin = req.body.horaFin;
+
+    // sacar
     for (let i = 0; i < horasInicio.length; i++) {
         if (horasInicio[i] < horasFin[i]) {
             console.log('HORAS: ', horasInicio[i], horasFin[i]);
@@ -138,7 +140,7 @@ const formNuevaClase = (req, res) => {
 
     console.log('DATOS DE LA CLASE ', datosSql1);
 
-    query(sqlQuery1, datosSql1)
+    await query(sqlQuery1, datosSql1)
     /* connection.query(sqlQuery1, datosSql1, (err, result) => {
         if (err) {
             console.log('Error al insertar los datos');
@@ -178,7 +180,7 @@ const formNuevaClase = (req, res) => {
         console.log('DATOS DEL HORARIO:  ', datosSql2);
 
 
-        query(sqlQuery2, datosSql2)
+        await query(sqlQuery2, datosSql2)
         /* connection.query(sqlQuery2, datosSql2, (err, result) => {
             if (err) {
                 console.log('Error al insertar los datos');
@@ -192,6 +194,9 @@ const formNuevaClase = (req, res) => {
                 }); 
             }
         }); */
+        res.render('datosCargados', {
+            style: ['index.css']
+        }); 
 
     }
 
@@ -255,7 +260,7 @@ const paginaEditarClase = (req, res) => {
 };
 
 
-const formEditarClase = (req, res) => {
+const formEditarClase = async (req, res) => {
     const ritmo = parseInt(req.body.ritmo);
     const nivel = parseInt(req.body.nivel);
     const profesor = parseInt(req.body.profesor);
@@ -288,8 +293,9 @@ const formEditarClase = (req, res) => {
 
     console.log('DATOS DE LA CLASE EDITADA', datosSql1);
 
-    query(sqlQuery1, datosSql1)
-    /* connection.query(sqlQuery1, datosSql1, (err, result) => {
+    await query(sqlQuery1, datosSql1);
+
+    /*connection.query(sqlQuery1, datosSql1, (err, result) => {
         if (err) {
             console.log('Error al insertar los datos');
             console.log(err);
@@ -301,7 +307,7 @@ const formEditarClase = (req, res) => {
                 style: ['index.css']
             });
         }
-    }); */
+    });*/
 
     for (let i = 0; i < dias.length; i++) {
         const codDia = parseInt(dias[i]);
@@ -333,7 +339,7 @@ const formEditarClase = (req, res) => {
         console.log('DATOS DEL HORARIO:  ', datosSql2);
 
 
-        query(sqlQuery2, datosSql2)
+        await query(sqlQuery2, datosSql2)
         /* connection.query(sqlQuery2, datosSql2, (err, result) => {
             if (err) {
                 console.log('Error al insertar los datos');
@@ -345,8 +351,10 @@ const formEditarClase = (req, res) => {
             }
         }); */
 
-    }
-
+    };
+    res.render('datosCargados', {
+        style: ['index.css']
+    }); 
 
 };
 
@@ -357,34 +365,14 @@ const pagEliminarClase = (req, res) => {
     const nombreNivel = req.query.nivel;
     console.log('CLASE A BORRAR: ', nombreRitmo, nombreNivel);
 
+    
     const sqlQuery1 = `SELECT ritmos.codRitmo FROM ritmos WHERE ritmos.nombreRitmo = '${nombreRitmo}'`;
     const sqlQuery2 = `SELECT niveles.codNivel FROM niveles WHERE niveles.nombreNivel = '${nombreNivel}'`;
-
-    const executeTransaction = async (codRitmo, codNivel) => {
-        try {
-            await query('START TRANSACTION');
-
-            const sqlQuery3 = `DELETE FROM horarios WHERE ritmo = ${codRitmo} AND nivel = ${codNivel}`;
-            const sqlQuery4 = `DELETE FROM clasePorAlumno WHERE ritmo = ${codRitmo} AND nivel = ${codNivel}`;
-            const sqlQuery5 = `DELETE FROM clases WHERE ritmo = ${codRitmo} AND nivel = ${codNivel}`;
-
-            await query(sqlQuery3);
-            await query(sqlQuery4);
-            await query(sqlQuery5);
-
-            await query('COMMIT');
-            console.log('Transaction successful');
-
-            res.redirect('/admin/clases')
-        } catch (error) {
-            await query('ROLLBACK');
-            console.error('Transaction failed, changes rolled back:', error);
-        }
-    }
-
+    
+    
     let codRitmo;
     let codNivel;
-
+    
     Promise.all([
         query(sqlQuery1),
         query(sqlQuery2)
@@ -392,8 +380,10 @@ const pagEliminarClase = (req, res) => {
         codRitmo = results[0][0].codRitmo;
         codNivel = results[1][0].codNivel;
         console.log('codigos ritmo y nivel: ' + codRitmo + ' ' + codNivel);
-
-        executeTransaction(codRitmo, codNivel);
+        
+        const sqlQuery3 = `DELETE FROM clases WHERE ritmo = ${codRitmo} AND nivel = ${codNivel}`;
+        query(sqlQuery3)
+        res.redirect('/admin/clases');
 
     }).catch(error => {
         console.error('Error al ejecutar consultas:', error);

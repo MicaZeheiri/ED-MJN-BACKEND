@@ -2,12 +2,9 @@
     <section>
         <h3>Mis clases</h3>
         <ul class="lista">
-            <li><span style="font-weight: 600;">Danza Clásica: Nivel Intermedio / Avanzado → </span>Lunes, Martes y
-                Jueves de 16:00 a 17:30</li>
-            <li><span style="font-weight: 600;">Danza Jazz: Nivel Avanzado → </span>Miércoles y Viernes de 16:00 a
-                17:30</li>
-            <li><span style="font-weight: 600;">Danza Contemporánea: Nivel Intermedio → </span>Lunes y Miércoles de
-                17:30 a 19:00</li>
+            {{#each clasesAlumno}}
+            <li><span style="font-weight: 600;">{{nombreRitmo}}: Nivel {{nombreNivel}} → </span>{{horarios}}</li>
+            {{/each}}
         </ul>
     </section>
 

@@ -84,10 +84,36 @@ const paginaEditarProfesor = (req, res) => {
     const dniProfesor = req.query.dniProfesor;
 
     const sqlQuery = `SELECT * FROM profesores WHERE dniProfesor = '${dniProfesor}'`
+    const sqlQuery2 = `
+                        SELECT CONCAT(r.nombreRitmo, ' - ', n.nombreNivel) AS clase, COUNT(ca.dniAlumno) AS cantAlumnos
+                        FROM clases c 
+                        LEFT JOIN clasePorAlumno ca ON c.ritmo = ca.ritmo AND c.nivel = ca.nivel
+                        JOIN ritmos r ON c.ritmo = r.codRitmo 
+                        JOIN niveles n ON c.nivel = n.codNivel 
+                        WHERE profesor = '${dniProfesor}'
+                        GROUP BY c.ritmo, c.nivel;`
 
 
+    Promise.all([
+        query(sqlQuery),
+        query(sqlQuery2)
+    ]).then(results => {
+        console.log(JSON.stringify(results));
+        const profesor = results[0][0];
+        const sueldo = results[1];
+        res.render('editarProfesor', {
+            style: ['contacto.css'],
+            profesor: profesor,
+            sueldo: sueldo
+        });
+        
 
-    query(sqlQuery)
+    }).catch(error => {
+        console.error('Error al ejecutar consultas:', error);
+        res.status(500).send('Error al ejecutar consultas');
+    });
+
+    /* query(sqlQuery)
         .then(results => {
             const profesor = results[0];
 
@@ -101,7 +127,7 @@ const paginaEditarProfesor = (req, res) => {
         }).catch(error => {
             console.error('Error al ejecutar consultas:', error);
             res.status(500).send('Error al ejecutar consultas');
-        });
+        }); */
 };
 
 

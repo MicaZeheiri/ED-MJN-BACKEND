@@ -12,10 +12,11 @@ const clasesRouter = require('./routes/clasesRouter');
 const alquilerSalasRouter = require('./routes/alquilerSalasRouter');
 const fotogaleriaRouter = require('./routes/fotogaleriaRouter');
 const loginRouter = require('./routes/loginRouter');
+const logoutRouter = require('./routes/logoutRouter');
 const alumnoRouter = require('./routes/alumnoRouter');
 const registroRouter = require('./routes/registroRouter');
 
-
+const verificarSesionAlumno = require('./middlewares/autenticacionAlumno')
 const verificarAutenticacion = require('./middlewares/autenticacionAdmin');
 const verificarRutaAdmin = require('./middlewares/verificarRutaAdmin');
 
@@ -50,7 +51,8 @@ app.use('/clases', clasesRouter);
 app.use('/alquilerSalas', alquilerSalasRouter);
 app.use('/fotogaleria', fotogaleriaRouter);
 app.use('/login', loginRouter);
-app.use('/alumno', alumnoRouter);
+app.use('/logout', logoutRouter);
+app.use('/alumno', verificarSesionAlumno, alumnoRouter);
 app.use('/registro', registroRouter);
 
 

@@ -1,4 +1,6 @@
-<div class="container mt-5 text-center">
+<div class="container text-center">
+    <h1 class="titulo-pestaña">LISTADO DE CLASES</h1>
+
     <table class="table table-striped">
         <thead class="table-dark">
             <tr>
@@ -20,7 +22,8 @@
                 <td class="align-middle">{{horarios}}</td>
                 <td class="align-middle">{{cantAlumnos}}</td>
                 <td class="align-middle">
-                    <a href="/admin/clases/editarClase?ritmo={{nombreRitmo}}&nivel={{nombreNivel}}&profesor={{profesor}}">
+                    <a
+                        href="/admin/clases/editarClase?ritmo={{nombreRitmo}}&nivel={{nombreNivel}}&profesor={{profesor}}">
                         <i class="bi bi-pencil-square text-warning"></i>
                     </a>
                 </td>
@@ -47,5 +50,5 @@
         </button>
     </a>
 
-    
+
 </div>

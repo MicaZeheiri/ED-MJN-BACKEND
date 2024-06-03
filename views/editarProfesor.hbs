@@ -7,8 +7,8 @@
                 <div class="row">
                     <div class="mb-3">
                         <label for="dni" class="form-label">D.N.I.</label>
-                        <input id="dni" name="dni" class="form-control" type="number"
-                            value="{{ profesor.dniProfesor }}" required>
+                        <input id="dni" name="dni" class="form-control" type="number" value="{{ profesor.dniProfesor }}"
+                            required>
                     </div>
                 </div>
                 <div class="row">
@@ -52,6 +52,36 @@
                         </div>
                     </div>
                 </div>
+                <table id="tablaSueldo" class="table table-striped">
+                    <thead class="table-dark">
+                        <tr>
+                            <th class="align-middle" scope="col">Clase</th>
+                            <th class="align-middle" scope="col">Cantidad de alumnos</th>
+                            <th class="align-middle" scope="col">A pagar</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-group-divider">
+                        {{#each sueldo}}
+                        <tr>
+                            <td class="align-middle" scope="row">{{clase}}</td>
+                            <td class="align-middle cantAlumnos">{{cantAlumnos}}</td>
+                            <td class="align-middle montoPagar"></td>
+
+                        </tr>
+                        {{/each}}
+
+                        {{#unless sueldo}}
+                        <tr>
+                            <td colspan="7">No hay clases del profesor para mostrar</td>
+                        </tr>
+                        {{/unless}}
+                    </tbody>
+                </table>
+                <div class="row mt-3">
+                    <div class="col">
+                        <h4>SUELDO: $<span id="sueldoTotal"></span></h4>
+                    </div>
+                </div>
             </fieldset>
 
             <div class="form-group">
@@ -61,3 +91,40 @@
         </form>
     </div>
 </main>
+
+<script>
+
+    const calcularMontoAPagar = () => {
+        let precioXalumno = document.getElementById('precioXalumno').value;
+        let tabla = document.getElementById('tablaSueldo');
+        console.log(tabla)
+
+        let filas = tabla.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+
+        let sueldoTotal = 0;
+
+        for (let i = 0; i < filas.length; i++) {
+            let fila = filas[i];
+            let cantAlumnosElement = fila.getElementsByClassName('cantAlumnos')[0];
+            let montoPagarElement = fila.getElementsByClassName('montoPagar')[0];
+
+            let cantAlumnos = cantAlumnosElement.textContent;
+            let montoPagar = precioXalumno * cantAlumnos;
+            sueldoTotal += montoPagar;
+
+            montoPagarElement.textContent = montoPagar.toFixed(2);
+            
+        }
+        console.log(sueldoTotal)
+        document.getElementById('sueldoTotal').textContent = sueldoTotal.toFixed(2);
+    };
+
+    document.addEventListener('DOMContentLoaded', function () {
+        calcularMontoAPagar();
+    });
+
+    document.getElementById('precioXalumno').addEventListener('input', () => {
+        calcularMontoAPagar();
+    });
+
+</script>

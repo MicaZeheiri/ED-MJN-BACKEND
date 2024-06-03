@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const paginaAlumno = require('../controllers/alumnoController')
+const paginaListarClasesAlumno = require('../controllers/alumnoController')
 
-router.get('/', paginaAlumno);
+router.get('/', paginaListarClasesAlumno);
 
 module.exports = router;
+
