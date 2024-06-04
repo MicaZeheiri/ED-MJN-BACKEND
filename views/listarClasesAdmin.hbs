@@ -1,4 +1,4 @@
-<div class="container text-center">
+{{!-- <div class="container text-center">
     <h1 class="titulo-pestaña">LISTADO DE CLASES</h1>
 
     <table class="table table-striped">
@@ -43,12 +43,116 @@
         </tbody>
     </table>
 
-    {{!-- Lleva a nueva clase --}}
     <a href="/admin/clases/nuevaClase">
         <button type="submit" class="btn mt-3 mb-3 float-end" id="enviarConsulta">
             + Nueva clase
         </button>
     </a>
+</div> --}}
+
+<div class="container text-center">
+    <h1 class="titulo-pestaña">LISTADO DE CLASES</h1>
+
+    <table class="table table-striped" id="tabla">
+        <thead class="table-dark">
+            <tr>
+                <th class="align-middle" scope="col">Ritmo</th>
+                <th class="align-middle" scope="col">Nivel</th>
+                <th class="align-middle" scope="col">Profesor</th>
+                <th class="align-middle" scope="col">Horarios</th>
+                <th class="align-middle" scope="col">Cantidad de alumnos</th>
+                <th class="align-middle" scope="col">Editar</th>
+                <th class="align-middle" scope="col">Eliminar</th>
+            </tr>
+        </thead>
+        <tbody class="table-group-divider">
+            {{#each clases}}
+            <tr>
+                <td class="align-middle" scope="row">{{nombreRitmo}}</td>
+                <td class="align-middle">{{nombreNivel}}</td>
+                <td class="align-middle">{{profesor}}</td>
+                <td class="align-middle">{{horarios}}</td>
+                <td class="align-middle">{{cantAlumnos}}</td>
+                <td class="align-middle">
+                    <a
+                        href="/admin/clases/editarClase?ritmo={{nombreRitmo}}&nivel={{nombreNivel}}&profesor={{profesor}}">
+                        <i class="bi bi-pencil-square text-warning"></i>
+                    </a>
+                </td>
+                <td class="align-middle text-danger">
+                    <button type="button" class="btn btnEliminar" data-bs-toggle="modal"
+                        data-bs-target="#staticBackdrop">
+                        <i class="bi bi-x-square text-danger"></i>
+                    </button>
+                </td>
+            </tr>
+            {{/each}}
+
+            {{#unless clases}}
+            <tr>
+                <td colspan="7">No hay clases para mostrar</td>
+            </tr>
+            {{/unless}}
+        </tbody>
+    </table>
 
 
+
+    <!-- Modal -->
+    <div class="modal fade" id="staticBackdrop" id="modal" data-bs-backdrop="static" data-bs-keyboard="false"
+        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5 text-danger" id="staticBackdropLabel">Eliminar Clase</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modalBody">
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" id="btnConfirmarEliminacion">
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <a href="/admin/clases/nuevaClase">
+        <button type="submit" class="btn mt-3 mb-3 float-end" id="enviarConsulta">
+            + Nueva clase
+        </button>
+    </a>
 </div>
+
+<script>
+    const tabla = document.getElementById('tabla');
+    const modalBody = document.getElementById('modalBody');
+    const btnConfirmarEliminacion = document.getElementById('btnConfirmarEliminacion');
+    console.log(btnConfirmarEliminacion)
+
+    tabla.addEventListener('click', (e) => {
+        e.stopPropagation();
+
+        if (e.target.classList.contains('btnEliminar') || e.target.classList.contains('bi-x-square')) {
+            const fila = e.target.closest('tr');
+
+            const ritmo = fila.querySelector('td:nth-child(1)').innerText;
+            const nivel = fila.querySelector('td:nth-child(2)').innerText;
+            const ritmoCodificado = encodeURIComponent(ritmo);
+            const nivelCodificado = encodeURIComponent(nivel);
+
+            let textoModal = `<p>¿Está seguro que desea eliminar la clase ${ritmo} - ${nivel}?</p>`;
+            modalBody.innerHTML = textoModal;
+
+            const url = `/admin/clases/eliminarClase?ritmo=${ritmoCodificado}&nivel=${nivelCodificado}`;
+
+            let ancla = `<a href="${url}" class="link-light link-underline link-underline-opacity-0">Eliminar</a>`;
+            btnConfirmarEliminacion.innerHTML = ancla;
+        };
+    });
+</script>
