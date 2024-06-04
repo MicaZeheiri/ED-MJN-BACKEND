@@ -175,9 +175,7 @@ const paginaEliminarProfesor = (req, res) => {
 
     query(sqlQuery)
         .then(result => {
-            res.render('datosCargados', {
-                style: ['index.css']
-            });
+            res.redirect('/admin/profesores')
         })
         .catch(err => {
             console.log('Error al LEER los datos');

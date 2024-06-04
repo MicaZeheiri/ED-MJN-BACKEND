@@ -1,7 +1,7 @@
 <div class="container text-center">
     <h1 class="titulo-pestaña">LISTADO DE PROFESORES</h1>
 
-    <table class="table table-striped">
+    <table class="table table-striped" id="tabla">
         <thead class="table-dark">
             <tr>
                 <th class="align-middle" scope="col">Nombre</th>
@@ -25,9 +25,11 @@
                     </a>
                 </td>
                 <td class="align-middle text-danger">
-                    <a href="/admin/profesores/eliminarProfesor?dniProfesor={{dniProfesor}}">
+                    <button type="button" class="btn btnEliminar" data-bs-toggle="modal"
+                        data-bs-target="#staticBackdrop">
                         <i class="bi bi-x-square text-danger"></i>
-                    </a>
+                    </button>
+
                 </td>
             </tr>
             {{/each}}
@@ -40,9 +42,33 @@
         </tbody>
     </table>
 
+
+    <!-- Modal de confirmación de eliminación de profesores -->
+    <div class="modal fade" id="staticBackdrop" id="modal" data-bs-backdrop="static" data-bs-keyboard="false"
+        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5 text-danger" id="staticBackdropLabel">Eliminar Profesor</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modalBody">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" id="btnConfirmarEliminacion">
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <a href="/admin/profesores/nuevoProfesor">
         <button type="submit" class="btn mt-3 mb-3 float-end" id="enviarConsulta">
             + Nuevo profesor
         </button>
     </a>
 </div>
+
+<script src="/js/listarProfesores.js"></script>
