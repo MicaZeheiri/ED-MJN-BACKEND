@@ -385,6 +385,7 @@ const pagEliminarClase = (req, res) => {
         query(sqlQuery3)
         res.redirect('/admin/clases');
 
+
     }).catch(error => {
         console.error('Error al ejecutar consultas:', error);
         res.status(500).send('Error al ejecutar consultas');
