@@ -2,12 +2,24 @@ const connection = require('../models/config');
 const { validationResult } = require('express-validator');
 const bcrypt = require('bcrypt');
 
+function query(sql, datosSql) {
+    return new Promise((resolve, reject) => {
+        connection.query(sql, datosSql, (error, result) => {
+            if (error) {
+                reject(error);
+            } else {
+                resolve(result);
+            }
+        });
+    });
+};
+
 
 const paginaLogin = (req, res) => {
     res.render('login', {
         style: ['login.css']
     });
-}
+};
 
 const loginUsuario = async (req, res) => {
 
@@ -15,13 +27,14 @@ const loginUsuario = async (req, res) => {
 
     const { dni, password, tipoUsuario } = req.body;
     console.log('DATOS:', dni, password, tipoUsuario);
-    const isAdmin = tipoUsuario === "administrador"; 
+    const isAdmin = tipoUsuario === "administrador";
 
     if (!controlError.isEmpty()) {
-        return res.render('error', {
-            errores: '1. ERROR EN LOS DATOS INGRESADOS'
-        })
-    }
+        return res.render('datosCargados', {
+            style: ['index.css'],
+            mensaje: "ERROR - Has cometido un error en los datos ingresados"
+        });
+    };
 
     console.log('PUNTO DE CONTROL INICIAL');
 
@@ -31,9 +44,9 @@ const loginUsuario = async (req, res) => {
 
         let usuario
 
-        const sqlQueryAlumno = `SELECT alumnos.dniAlumno, alumnos.password 
-                            FROM alumnos 
-                            WHERE dniAlumno = ${dni}`
+        const sqlQueryAlumno = `    SELECT alumnos.dniAlumno, alumnos.password 
+                                    FROM alumnos 
+                                    WHERE dniAlumno = ${dni}`
 
         const sqlQueryAdmin = `SELECT * FROM administradores WHERE dniAdmin = ${dni}`
 
@@ -55,22 +68,25 @@ const loginUsuario = async (req, res) => {
                 });
             });
 
+
             // Si no se encontró el alumno registrado
             if (!usuario) {
-                res.render('error', {
-                    errores: 'Su DNI no está registrado en nuestra base de datos de alumnos. Por favor diríjase a Ibarbalz 1052, Barrio General Paz para efectuar su inscripción.'
+                res.render('datosCargados', {
+                    style: ['index.css'],
+                    mensaje: "ERROR - Su DNI no está registrado en nuestra base de datos de alumnos. Por favor diríjase a Ibarbalz 1052, Barrio General Paz para efectuar su inscripción."
                 });
                 console.log('PUNTO DE CONTROL 1');
-            }
+            };
 
             // Si está registrado como alumno pero no como usuario
             if (usuario.dniAlumno && usuario.password === null) {
+                console.log('PUNTO DE CONTROL 2');
                 // Hacer render de registro
-                res.render('error', {
-                    errores: 'El usuario no existe, por favor regístrese'
+                res.render('datosCargados', {
+                    style: ['index.css'],
+                    mensaje: "ERROR - El usuario no existe, por favor regístrese"
                 });
             }
-            console.log('PUNTO DE CONTROL 2');
 
             // El alumno está registrado como usuario
             console.log(usuario.dniAlumno, usuario.password);
@@ -83,17 +99,14 @@ const loginUsuario = async (req, res) => {
                 };
                 res.redirect('/alumno')
             } else {
-                res.redirect('/login')
+                res.render('datosCargados', {
+                    style: ['index.css'],
+                    mensaje: "ERROR - Contraseña incorrecta"
+                });
             }
 
 
             console.log('Usuario logueado: ', usuario, match);
-
-            /* res.json({
-                msg: 'Usuario logueado correctamente',
-                usuario: usuario,
-                match: match
-            }) */
 
         } else {
 
@@ -115,8 +128,9 @@ const loginUsuario = async (req, res) => {
 
             // No está registrado como administrador
             if (!usuario) {
-                res.render('error', {
-                    errores: 'No tienes permisos de administrador, verifica que hayas seleccionado la opción correcta.'
+                res.render('datosCargados', {
+                    style: ['index.css'],
+                    mensaje: "ERROR - No tienes permisos de administrador, verifica que hayas seleccionado la opción correcta"
                 });
             }
 
@@ -124,6 +138,7 @@ const loginUsuario = async (req, res) => {
             console.log('USUARIO: ', usuario.dniAdmin, usuario.password);
             const match = await bcrypt.compare(password, usuario.password)
 
+            // Está registrado como administrador
             if (match) {
                 req.session.usuario = {
                     dniUsuario: usuario.dniAdmin,
@@ -131,7 +146,10 @@ const loginUsuario = async (req, res) => {
                 };
                 res.redirect('/admin/inscripciones/alumno')
             } else {
-                res.redirect('/login')
+                res.render('datosCargados', {
+                    style: ['index.css'],
+                    mensaje: "ERROR - Contraseña incorrecta"
+                });
             }
 
         }
@@ -139,12 +157,11 @@ const loginUsuario = async (req, res) => {
     } catch (error) {
         console.log('PUNTO DE CONTROL 5');
         console.log(error);
-        res.render('error', {
-            errores: '2. ERROR EN LOS DATOS INGRESADOS'
-        })
+        res.render('datosCargados', {
+            style: ['index.css'],
+            mensaje: "ERROR - Hubo un error en los datos ingresados"
+        });
     }
-
-
 };
 
 

@@ -43,13 +43,17 @@ const formInscripcionAlumno = (req, res) => {
     query(sqlQuery, datosSql)
         .then(result => {
             res.render('datosCargados', {
-                style: ['index.css']
+                style: ['index.css'],
+                mensaje: "¡Los datos del nuevo alumno fueron registrados con éxito!"
             });
         })
         .catch(err => {
             console.log('Error al LEER los datos');
             console.log(err);
-            res.send('Error al LEER los datos');
+            res.render('datosCargados', {
+                style: ['index.css'],
+                mensaje: "ERROR - No se pudieron registrar los datos del nuevo alumno correctamente"
+            });
         });
 };
 
@@ -73,7 +77,7 @@ const paginaInscripcionClases = (req, res) => {
         console.log(results);
         const clases = results[0];
         const alumnos = results[1];
-        
+
         res.render('inscripcionClases', {
             style: ['contacto.css'],
             clase: clases,
@@ -81,7 +85,10 @@ const paginaInscripcionClases = (req, res) => {
         });
     }).catch(error => {
         console.error('Error al ejecutar consultas:', error);
-        res.status(500).send('Error al ejecutar consultas');
+        res.render('datosCargados', {
+            style: ['index.css'],
+            mensaje: "ERROR - No se pudieron obtener los datos necesarios para la inscripción a clases"
+        });
     });
 
 }
@@ -102,16 +109,36 @@ const formInscripcionClases = (req, res) => {
     clasesSeparadas.forEach(clase => {
         nombreRitmo = clase.nombreRitmo
         nombreNivel = clase.nombreNivel
+
         const sqlQuery = `INSERT INTO ClasePorAlumno (dniAlumno, ritmo, nivel)
                             SELECT ${dni},
                             (SELECT codRitmo FROM Ritmos WHERE nombreRitmo = '${nombreRitmo}'),
                             (SELECT codNivel FROM Niveles WHERE nombreNivel = '${nombreNivel}')`
+
         const datosSql = {
             dniAlumno: dni,
             ritmo: nombreRitmo,
             nivel: nombreNivel
         }
-        connection.query(sqlQuery, datosSql, (err, result) => {
+
+        query(sqlQuery, datosSql)
+            .then(result => {
+                res.render('datosCargados', {
+                    style: ['index.css'],
+                    mensaje: "¡La inscripción a clases del alumno fue registrada con éxito!"
+                });
+            })
+            .catch(err => {
+                console.log('Error al LEER los datos');
+                console.log(err);
+                res.render('datosCargados', {
+                    style: ['index.css'],
+                    mensaje: "ERROR - No se pudo registrar la inscripción a clases del alumno correctamente"
+                });
+            });
+
+
+        /* connection.query(sqlQuery, datosSql, (err, result) => {
             if (err) {
                 console.log('Error al insertar los datos');
                 console.log(err);
@@ -123,7 +150,7 @@ const formInscripcionClases = (req, res) => {
                     style: ['index.css']
                 });
             }
-        });
+        }); */
     });
 
 }

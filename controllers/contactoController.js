@@ -1,4 +1,3 @@
-// IMPORTAMOS LA CONEXIÓN A LA BASE DE DATOS
 const enviarMail = require('../services/enviarMail');
 
 const paginaContacto = (req, res) => {
@@ -18,7 +17,6 @@ const paginaFormulario = (req, res) => {
 
     res.redirect('/contacto')
 }
-
 
 
 module.exports = {

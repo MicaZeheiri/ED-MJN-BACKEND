@@ -32,12 +32,15 @@ const paginaListarAlumnos = (req, res) => {
         .catch(err => {
             console.log('Error al LEER los datos');
             console.log(err);
-            res.send('Error al LEER los datos');
+            res.render('datosCargados', {
+                style: ['index.css'],
+                mensaje: "ERROR - No se pudieron obtener los datos de los alumnos"
+            });
         });
 }
 
 const paginaEditarAlumno = (req, res) => {
-    const dniAlumno = req.query.dniAlumno;
+    const dniAlumno = parseInt(req.query.dniAlumno);
 
     const sqlQuery = `
                         SELECT 
@@ -50,8 +53,48 @@ const paginaEditarAlumno = (req, res) => {
                         FROM alumnos 
                         WHERE dniAlumno = '${dniAlumno}'`
 
+    const sqlQuery2 = `
+                        SELECT 
+                            r.nombreRitmo, 
+                            n.nombreNivel,
+                            p.precioXalumno
+                        FROM 
+                            clasePorAlumno ca
+                        JOIN 
+                            ritmos r ON ca.ritmo = r.codRitmo 
+                        JOIN 
+                            niveles n ON ca.nivel = n.codNivel 
+                        JOIN 
+                            clases c ON (ca.ritmo = c.ritmo AND ca.nivel = c.nivel)
+                        JOIN
+                            profesores p ON (c.profesor = p.dniProfesor)
+                        WHERE dniAlumno = ${dniAlumno}`;
 
-    query(sqlQuery)
+    Promise.all([
+        query(sqlQuery),
+        query(sqlQuery2)
+    ])
+        .then(results => {
+            console.log(JSON.stringify(results));
+            const alumno = results[0][0];
+            const clases = results[1];
+            console.log('ALUMNO: ' + JSON.stringify(alumno));
+            console.log('Clases: ' + JSON.stringify(clases));
+            res.render('editarAlumno', {
+                style: ['contacto.css', 'clases.css'],
+                alumno: alumno,
+                clasePorAlumno: clases
+            });
+        })
+        .catch(error => {
+            console.error('Error al ejecutar consultas:', error);
+            res.render('datosCargados', {
+                style: ['index.css'],
+                mensaje: "ERROR - No se pudieron obtener los datos del alumno seleccionado"
+            });
+        });
+
+    /* query(sqlQuery)
         .then(results => {
             const alumno = results[0];
 
@@ -60,25 +103,28 @@ const paginaEditarAlumno = (req, res) => {
             res.render('editarAlumno', {
                 style: ['contacto.css'],
                 alumno: alumno
-                
             });
-        }).catch(error => {
+        })
+        .catch(error => {
             console.error('Error al ejecutar consultas:', error);
-            res.status(500).send('Error al ejecutar consultas');
-        });
+            res.render('datosCargados', {
+                style: ['index.css'],
+                mensaje: "ERROR - No se pudieron obtener los datos del alumno seleccionado"
+            });
+        }); */
 };
 
 
 const formEditarAlumno = (req, res) => {
-    const dniOriginal = req.body.dniOriginal;
-    const dni = req.body.dni;
+    const dniOriginal = parseInt(req.body.dniOriginal);
+    const dni = parseInt(req.body.dni);
     const nombre = req.body.nombre;
     const apellido = req.body.apellido;
     const fechaNacimiento = req.body.fechaNacimiento;
     const telefono = parseInt(req.body.telefono);
     const email = req.body.email;
 
-    console.log('PROFE EDITADO: ', dni, nombre, apellido, telefono, email, fechaNacimiento);
+    console.log('Alumno EDITADO: ', dni, nombre, apellido, telefono, email, fechaNacimiento);
 
 
     const sqlQuery = `UPDATE alumnos SET ? WHERE dniAlumno = '${dniOriginal}'`;
@@ -95,18 +141,73 @@ const formEditarAlumno = (req, res) => {
     query(sqlQuery, datosSql)
         .then(result => {
             res.render('datosCargados', {
-                style: ['index.css']
+                style: ['index.css'],
+                mensaje: "¡Los datos del alumno fueron registrados con éxito!"
             });
         })
         .catch(err => {
             console.log('Error al LEER los datos');
             console.log(err);
-            res.send('Error al LEER los datos');
+            res.render('datosCargados', {
+                style: ['index.css'],
+                mensaje: "ERROR - No se pudieron registrar los datos del alumno correctamente"
+            });
         });
 };
+
+const paginaDarBajaClase = (req, res) => {
+    const dniAlumno = req.query.dniAlumno;
+    const nombreRitmo = req.query.ritmo;
+    const nombreNivel = req.query.nivel;
+    console.log('CLASE A BORRAR: ', nombreRitmo, nombreNivel, dniAlumno);
+
+
+    const sqlQuery1 = `SELECT ritmos.codRitmo FROM ritmos WHERE ritmos.nombreRitmo = '${nombreRitmo}'`;
+    const sqlQuery2 = `SELECT niveles.codNivel FROM niveles WHERE niveles.nombreNivel = '${nombreNivel}'`;
+
+
+    let codRitmo;
+    let codNivel;
+
+    Promise.all([
+        query(sqlQuery1),
+        query(sqlQuery2)
+    ])
+        .then(results => {
+            codRitmo = results[0][0].codRitmo;
+            codNivel = results[1][0].codNivel;
+            console.log('codigos ritmo y nivel: ' + codRitmo + ' ' + codNivel);
+
+            const sqlQuery3 = `DELETE FROM clasePorAlumno WHERE ritmo = ${codRitmo} AND nivel = ${codNivel} AND dniAlumno = '${dniAlumno}'`;
+            query(sqlQuery3)
+                .then(result => {
+                    res.render('datosCargados', {
+                        style: ['index.css'],
+                        mensaje: "¡El alumno fue dado de baja de la clase con éxito!"
+                    });
+                })
+                .catch(error => {
+                    console.error('Error al ejecutar consultas:', error);
+                    res.render('datosCargados', {
+                        style: ['index.css'],
+                        mensaje: "ERROR - No se pudo dar de baja al alumno en la clase seleccionada"
+                    });
+                });
+        })
+        .catch(error => {
+            console.error('Error al ejecutar consultas:', error);
+            res.render('datosCargados', {
+                style: ['index.css'],
+                mensaje: "ERROR - No se pudo obtener los datos necesarios para dar de baja al alumno en la clase seleccionada"
+            });
+        });
+
+
+}
 
 module.exports = {
     paginaListarAlumnos,
     paginaEditarAlumno,
-    formEditarAlumno
+    formEditarAlumno,
+    paginaDarBajaClase
 }

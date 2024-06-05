@@ -51,7 +51,10 @@ const paginaListarClases = (req, res) => {
         .catch(err => {
             console.log('Error al LEER los datos');
             console.log(err);
-            res.send('Error al LEER los datos');
+            res.render('datosCargados', {
+                style: ['index.css'],
+                mensaje: "ERROR - No se pudieron obtener los datos de las clases"
+            });
         });
 
     /* connection.query(sqlQuery, (err, result) => {
@@ -87,27 +90,32 @@ const paginaNuevaClase = (req, res) => {
         query(sqlQuery2),
         query(sqlQuery3),
         query(sqlQuery4)
-    ]).then(results => {
-        const profesores = results[0];
-        const ritmos = results[1];
-        const niveles = results[2];
-        const dias = results[3]
+    ])
+        .then(results => {
+            const profesores = results[0];
+            const ritmos = results[1];
+            const niveles = results[2];
+            const dias = results[3]
 
-        res.render('nuevaClase', {
-            style: ['contacto.css'],
-            profesor: profesores,
-            ritmo: ritmos,
-            nivel: niveles,
-            dia: dias
+            res.render('nuevaClase', {
+                style: ['contacto.css'],
+                profesor: profesores,
+                ritmo: ritmos,
+                nivel: niveles,
+                dia: dias
+            });
+        })
+        .catch(error => {
+            console.error('Error al ejecutar consultas:', error);
+            res.render('datosCargados', {
+                style: ['index.css'],
+                mensaje: "ERROR - No se pudieron obtener los datos necesarios para el registro de clases"
+            });
         });
-    }).catch(error => {
-        console.error('Error al ejecutar consultas:', error);
-        res.status(500).send('Error al ejecutar consultas');
-    });
 };
 
 
-const formNuevaClase = async (req, res) => {
+const formNuevaClase1 = async (req, res) => {
     const ritmo = parseInt(req.body.ritmo);
     const nivel = parseInt(req.body.nivel);
     const profesor = parseInt(req.body.profesor);
@@ -194,14 +202,79 @@ const formNuevaClase = async (req, res) => {
                 }); 
             }
         }); */
-        res.render('datosCargados', {
-            style: ['index.css']
-        }); 
-
     }
 
-}
+    res.render('datosCargados', {
+        style: ['index.css'],
+        mensaje: "¡Se registraron los datos de la clase con éxito!"
+    });
 
+};
+
+const formNuevaClase = (req, res) => {
+    const ritmo = parseInt(req.body.ritmo);
+    const nivel = parseInt(req.body.nivel);
+    const profesor = parseInt(req.body.profesor);
+    const dias = req.body.dia;
+    const horasInicio = req.body.horaInicio;
+    const horasFin = req.body.horaFin;
+
+    console.log('======================================');
+    console.log('DATOS: ', req.body);
+    console.log('======================================');
+
+    const sqlQuery1 = `INSERT INTO clases SET ?`;
+
+    const datosSql1 = {
+        ritmo: ritmo,
+        nivel: nivel,
+        profesor: profesor
+    };
+
+    console.log('DATOS DE LA CLASE ', datosSql1);
+
+
+    query(sqlQuery1, datosSql1)
+        .then(result => {
+            for (let i = 0; i < dias.length; i++) {
+                const codDia = parseInt(dias[i]);
+                let horaInicio
+                let horaFin
+                if (dias.length > 1) {
+                    horaInicio = new Date(`1970-01-01T${horasInicio[i]}`);
+                    horaFin = new Date(`1970-01-01T${horasFin[i]}`);
+                } else {
+                    horaInicio = new Date(`1970-01-01T${horasInicio}`);
+                    horaFin = new Date(`1970-01-01T${horasFin}`);
+                }
+
+                const sqlQuery2 = `INSERT INTO horarios SET ?`;
+
+                const datosSql2 = {
+                    ritmo: ritmo,
+                    nivel: nivel,
+                    dia: codDia,
+                    horaInicio: horaInicio.toTimeString().slice(0, 8),
+                    horaFin: horaFin.toTimeString().slice(0, 8)
+                };
+
+                console.log('DATOS DEL HORARIO:  ', datosSql2);
+                query(sqlQuery2, datosSql2)
+            };
+            res.render('datosCargados', {
+                style: ['index.css'],
+                mensaje: "¡Se registraron los datos de la clase con éxito!"
+            });
+        })
+        .catch(err => {
+            console.log('Error al LEER los datos');
+            console.log(err);
+            res.render('datosCargados', {
+                style: ['index.css'],
+                mensaje: "ERROR - No se pudo registrar la clase correctamente"
+            });
+        });
+};
 
 const paginaEditarClase = (req, res) => {
     const nombreRitmoActual = req.query.ritmo;
@@ -232,31 +305,36 @@ const paginaEditarClase = (req, res) => {
         query(sqlQuery2),
         query(sqlQuery3),
         query(sqlQuery4)
-    ]).then(results => {
-        const horario = results[0]
-        const profesores = results[1];
-        const ritmos = results[2];
-        const niveles = results[3];
-        const dias = results[4]
+    ])
+        .then(results => {
+            const horario = results[0]
+            const profesores = results[1];
+            const ritmos = results[2];
+            const niveles = results[3];
+            const dias = results[4]
 
-        console.log('horarios: ' + JSON.stringify(horario));
-        console.log('dias: ' + JSON.stringify(dias));
+            console.log('horarios: ' + JSON.stringify(horario));
+            console.log('dias: ' + JSON.stringify(dias));
 
-        res.render('editarClaseAdmin', {
-            style: ['contacto.css'],
-            nombreRitmoActual: nombreRitmoActual,
-            nombreNivelActual: nombreNivelActual,
-            nombreProfesorActual: nombreProfesorActual,
-            horario: horario,
-            profesor: profesores,
-            ritmo: ritmos,
-            nivel: niveles,
-            dia: dias
+            res.render('editarClaseAdmin', {
+                style: ['contacto.css'],
+                nombreRitmoActual: nombreRitmoActual,
+                nombreNivelActual: nombreNivelActual,
+                nombreProfesorActual: nombreProfesorActual,
+                horario: horario,
+                profesor: profesores,
+                ritmo: ritmos,
+                nivel: niveles,
+                dia: dias
+            });
+        })
+        .catch(error => {
+            console.error('Error al ejecutar consultas:', error);
+            res.render('datosCargados', {
+                style: ['index.css'],
+                mensaje: "ERROR - No se pudieron obtener los datos de la clase seleccionada"
+            });
         });
-    }).catch(error => {
-        console.error('Error al ejecutar consultas:', error);
-        res.status(500).send('Error al ejecutar consultas');
-    });
 };
 
 
@@ -353,8 +431,9 @@ const formEditarClase = async (req, res) => {
 
     };
     res.render('datosCargados', {
-        style: ['index.css']
-    }); 
+        style: ['index.css'],
+        mensaje: "¡Los datos de la clase fueron registrados con éxito!"
+    });
 
 };
 
@@ -365,31 +444,72 @@ const pagEliminarClase = (req, res) => {
     const nombreNivel = req.query.nivel;
     console.log('CLASE A BORRAR: ', nombreRitmo, nombreNivel);
 
+    const executeTransaction = async (sqlQuery1, sqlQuery2, sqlQuery3) => {
+        try {
+            await query('START TRANSACTION');
     
+            await query(sqlQuery1);
+            await query(sqlQuery2);
+            await query(sqlQuery3);
+    
+            await query('COMMIT');
+            console.log('Transaction successful');
+            res.render('datosCargados', {
+                style: ['index.css'],
+                mensaje: "¡La clase seleccionada fue eliminada con éxito!"
+            });
+        } catch (error) {
+            await query('ROLLBACK');
+            console.error('Transaction failed, changes rolled back:', error);
+            res.render('datosCargados', {
+                style: ['index.css'],
+                mensaje: "ERROR - No se pudo eliminar la clase seleccionada"
+            });
+        }
+    }
+
     const sqlQuery1 = `SELECT ritmos.codRitmo FROM ritmos WHERE ritmos.nombreRitmo = '${nombreRitmo}'`;
     const sqlQuery2 = `SELECT niveles.codNivel FROM niveles WHERE niveles.nombreNivel = '${nombreNivel}'`;
-    
-    
-    let codRitmo;
-    let codNivel;
-    
+
     Promise.all([
         query(sqlQuery1),
         query(sqlQuery2)
     ]).then(results => {
-        codRitmo = results[0][0].codRitmo;
-        codNivel = results[1][0].codNivel;
+        let codRitmo = results[0][0].codRitmo;
+        let codNivel = results[1][0].codNivel;
         console.log('codigos ritmo y nivel: ' + codRitmo + ' ' + codNivel);
-        
-        const sqlQuery3 = `DELETE FROM clases WHERE ritmo = ${codRitmo} AND nivel = ${codNivel}`;
+
+        const sqlQuery3 = `DELETE FROM horarios WHERE ritmo = '${codRitmo}' AND nivel = '${codNivel}'`;
+        const sqlQuery4 = `DELETE FROM clasePorAlumno WHERE ritmo = '${codRitmo}' AND nivel = '${codNivel}'`;
+        const sqlQuery5 = `DELETE FROM clases WHERE ritmo = '${codRitmo}' AND nivel = '${codNivel}'`;
+
+        executeTransaction(sqlQuery3, sqlQuery4, sqlQuery5);
+
+        /* const sqlQuery3 = `DELETE FROM clases WHERE ritmo = ${codRitmo} AND nivel = ${codNivel}`;
         query(sqlQuery3)
-        res.redirect('/admin/clases');
-
-
+            .then(results => {
+                res.render('datosCargados', {
+                    style: ['index.css'],
+                    mensaje: "¡La clase seleccionada fue eliminada con éxito!"
+                });
+            })
+            .catch(error => {
+                console.error('Error al ejecutar consultas:', error);
+                res.render('datosCargados', {
+                    style: ['index.css'],
+                    mensaje: "ERROR - No se pudo eliminar la clase seleccionada"
+                });
+            }); */
     }).catch(error => {
         console.error('Error al ejecutar consultas:', error);
-        res.status(500).send('Error al ejecutar consultas');
+        res.render('datosCargados', {
+            style: ['index.css'],
+            mensaje: "ERROR - No se pudo eliminar la clase seleccionada"
+        });
     });
+
+    
+    
 
 
 }

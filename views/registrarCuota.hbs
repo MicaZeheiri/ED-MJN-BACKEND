@@ -1,0 +1,56 @@
+<h1 class="titulo-pestaña">REGISTRO DE PAGO DE CUOTAS</h1>
+<main>
+    <div class="container" style="max-width: 800px;">
+        <form method="post" action="/admin/cuotas/nuevaCuota">
+            <fieldset>
+                <div class="row mb-3">
+                    <div class="col">
+                        <label for="dni" class="form-label">D.N.I. alumno</label>
+                        <select name="dni" id="dni" class="form-select" required>
+                            <option selected value="">-- Seleccione el DNI de un alumno --</option>
+                            {{#each dniAlumno}}
+                            <option value="{{dniAlumno}}">{{dniAlumno}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="mb-3">
+                        <label for="anio" class="form-label">Año</label>
+                        <input type="number" class="form-control" name="anio" id="anio"
+                            placeholder="Año de la cuota a abonar" required>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col">
+                        <label for="mes" class="form-label">Mes</label>
+                        <select name="mes" id="mes" class="form-select" required>
+                            <option selected value="">-- Seleccione el mes a abonar --</option>
+                            {{#each mes}}
+                            <option value="{{numero}}">{{nombreMes}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="mb-3">
+                        <label for="monto" class="form-label">Monto</label>
+                        <div class="input-group">
+                            <span class="input-group-text" id="inputGroupPrepend">$</span>
+                            <input id="monto" name="monto" class="form-control" type="number"
+                                placeholder="Monto de la cuota a abonar" required>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+
+            <div class="form-group">
+                <input type="submit" class="btn mt-2 float-end mb-3" id="enviarConsulta"
+                    value="Registrar pago de cuota"></input>
+            </div>
+        </form>
+    </div>
+</main>

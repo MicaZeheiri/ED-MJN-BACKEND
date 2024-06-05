@@ -1,0 +1,42 @@
+<div class="container text-center">
+    <h1 class="titulo-pestaña">LISTADO DE CUOTAS PAGADAS</h1>
+    <table class="table table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th class="align-middle" scope="col">Nombre del alumno</th>
+                <th class="align-middle" scope="col">DNI del alumno</th>
+                <th class="align-middle" scope="col">Mes</th>
+                <th class="align-middle" scope="col">Año</th>
+                <th class="align-middle" scope="col">Monto</th>
+                <th class="align-middle" scope="col">Fecha de pago</th>
+
+            </tr>
+        </thead>
+        <tbody class="table-group-divider">
+            {{#each cuotas}}
+            <tr>
+                <td class="align-middle" scope="row">{{nombreCompletoAlumno}}</td>
+                <td class="align-middle">{{dniAlumno}}</td>
+                <td class="align-middle">{{nombreMes}}</td>
+                <td class="align-middle">{{anio}}</td>
+                <td class="align-middle">${{montoPagado}}</td>
+                <td class="align-middle">{{fechaDePago}}</td>
+            </tr>
+            {{/each}}
+
+            {{#unless cuotas}}
+            <tr>
+                <td colspan="7">No hay cuotas abonadas para mostrar</td>
+            </tr>
+            {{/unless}}
+        </tbody>
+    </table>
+
+    <a href="/admin/cuotas/nuevaCuota">
+        <button type="button" class="btn mt-3 mb-3 float-end" id="enviarConsulta">
+            + Nuevo pago
+        </button>
+    </a>
+</div>   
+   
+   

@@ -3,32 +3,34 @@
     <div class="container" style="max-width: 800px;">
         <form method="post" action="/admin/alumnos/editarAlumno">
             <fieldset>
+                <legend>Alumno</legend>
                 <input class="invisible" name="dniOriginal" value="{{ alumno.dniAlumno }}">
                 <div class="row">
                     <div class="mb-3">
                         <label for="dni" class="form-label">D.N.I.</label>
-                        <input id="dni" name="dni" class="form-control" type="number"
-                            value="{{ alumno.dniAlumno }}" required>
+                        <input id="dni" name="dni" class="form-control" type="number" value="{{ alumno.dniAlumno }}"
+                            required>
                     </div>
                 </div>
                 <div class="row">
                     <div class="mb-3">
                         <label for="nombre" class="form-label">Nombre</label>
-                        <input type="text" class="form-control" name="nombre" value="{{ alumno.nombreAlumno }}"
-                            required>
+                        <input type="text" class="form-control" name="nombre" id="nombre"
+                            value="{{ alumno.nombreAlumno }}" required>
                     </div>
                 </div>
                 <div class="row">
                     <div class="mb-3">
                         <label for="apellido" class="form-label">Apellido</label>
-                        <input type="text" class="form-control" name="apellido" value="{{ alumno.apellidoAlumno }}"
-                            required>
+                        <input type="text" class="form-control" name="apellido" id="apellido"
+                            value="{{ alumno.apellidoAlumno }}" required>
                     </div>
                 </div>
                 <div class="row">
                     <div class="mb-3">
                         <label for="fechaNacimiento" class="form-label">Fecha de nacimiento</label>
-                        <input id="fechaNacimiento" name="fechaNacimiento" class="form-control" type="date" value="{{ alumno.fechaNacimiento }}" required>
+                        <input id="fechaNacimiento" name="fechaNacimiento" class="form-control" type="date"
+                            value="{{ alumno.fechaNacimiento }}" required>
                     </div>
                 </div>
                 <div class="row">
@@ -47,10 +49,75 @@
                 </div>
             </fieldset>
 
+
+            <fieldset>
+                <legend>Clases</legend>
+                <table id="tablaCuotas" class="table table-striped">
+                    <thead class="table-dark">
+                        <tr>
+                            <th class="align-middle" scope="col">Ritmo</th>
+                            <th class="align-middle" scope="col">Nivel</th>
+                            <th class="align-middle" scope="col">Precio por clase</th>
+                            <th class="align-middle" scope="col">Dar de baja</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-group-divider">
+                        {{#each clasePorAlumno}}
+                        <tr>
+                            <td class="align-middle" scope="row">{{nombreRitmo}}</td>
+                            <td class="align-middle">{{nombreNivel}}</td>
+                            <td class="align-middle precioIndividual">{{precioXalumno}}</td>
+                            <td class="align-middle">
+                                <button type="button" class="btn btnEliminar" data-bs-toggle="modal"
+                                    data-bs-target="#staticBackdrop">
+                                    <i class="bi bi-x-square text-danger"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        {{/each}}
+
+                        {{#unless clasePorAlumno}}
+                        <tr>
+                            <td colspan="4">No hay clases del alumno para mostrar</td>
+                        </tr>
+                        {{/unless}}
+                    </tbody>
+                </table>
+
+                <div class="row mt-3">
+                    <h3>CUOTA: $<span id="cuotaTotal"></span></h3>
+                </div>
+            </fieldset>
+
             <div class="form-group">
                 <input type="submit" class="btn mt-2 float-end mb-3" id="enviarConsulta"
                     value="Confirmar cambios"></input>
             </div>
         </form>
+
+
+        {{!-- Modal de confirmación de baja a las clases --}}
+        <div class="modal fade" id="staticBackdrop" id="modal" data-bs-backdrop="static" data-bs-keyboard="false"
+            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5 text-danger" id="staticBackdropLabel">Dar de baja al alumno en esta clase</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="modalBody">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-danger" id="btnConfirmarEliminacion">
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </main>
+
+<script src="/js/calcularCuota.js"></script>

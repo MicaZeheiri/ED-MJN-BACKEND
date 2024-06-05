@@ -1,6 +1,5 @@
 const connection = require('../models/config');
 
-
 function query(sql, datosSql) {
     return new Promise((resolve, reject) => {
         connection.query(sql, datosSql, (error, result) => {
@@ -14,15 +13,13 @@ function query(sql, datosSql) {
 }
 
 
-
-
 const paginaListarClasesAlumno = (req, res) => {
     const usuario = req.session.usuario;
     console.log('USUARIO ALUMNO', usuario);
     console.log(usuario.dniUsuario);
     const dniAlumno = usuario.dniUsuario;
 
-    const sqlQuery = `
+    const sqlQuery1 = `
         SELECT 
             r.nombreRitmo, 
             n.nombreNivel, 
@@ -43,7 +40,36 @@ const paginaListarClasesAlumno = (req, res) => {
         ORDER BY 
             r.nombreRitmo;`;
 
-    query(sqlQuery)
+    const sqlQuery2 = `
+                        SELECT c.anio, m.nombreMes, c.montoPagado, DATE_FORMAT(c.fechaDePago, '%d-%m-%Y') AS fechaDePago
+                        FROM cuotas c
+                        JOIN meses m ON (c.mes = m.numero)
+                        WHERE c.dniAlumno = ${dniAlumno}
+                        ORDER BY c.anio DESC, c.mes`;
+
+    Promise.all([
+        query(sqlQuery1),
+        query(sqlQuery2)
+    ])
+        .then(results => {
+            clases = results[0];
+            pagos = results[1];
+
+            res.render('alumno', {
+                style: ['alumno.css', 'index.css'],
+                clasesAlumno: clases,
+                cuotas: pagos
+            });
+        })
+        .catch(error => {
+            console.error('Error al ejecutar consultas:', error);
+            res.render('datosCargados', {
+                style: ['index.css'],
+                mensaje: "ERROR - No se pudo obtener los datos necesarios para dar de baja al alumno en la clase seleccionada"
+            });
+        });
+
+    /* query(sqlQuery1)
         .then(result => {
             console.log('result', result);
             res.render('alumno', {
@@ -54,26 +80,13 @@ const paginaListarClasesAlumno = (req, res) => {
         .catch(err => {
             console.log('Error al LEER los datos');
             console.log(err);
-            res.send('Error al LEER los datos');
-        });
+            res.render('datosCargados', {
+                style: ['index.css'],
+                mensaje: "ERROR - No se pudieron obtener los datos de tus clases"
+            });
+        }); */
 
 }
-
-const paginaAlumno = (req, res) => {
-    const usuario = req.session.usuario;
-    console.log('USUARIO ALUMNO', usuario);
-    console.log(usuario.dniUsuario);
-    const dniAlumno = usuario.dniUsuario;
-
-
-    res.render('alumno', {
-        style: ['alumno.css', 'index.css'],
-        usuario: req.session.usuario
-    });
-
-
-}
-
 
 module.exports =
     paginaListarClasesAlumno;

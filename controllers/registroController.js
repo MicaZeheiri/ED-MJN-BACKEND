@@ -2,6 +2,18 @@ const connection = require('../models/config');
 const { validationResult } = require('express-validator');
 const bcrypt = require('bcrypt');
 
+function query(sql, datosSql) {
+    return new Promise((resolve, reject) => {
+        connection.query(sql, datosSql, (error, result) => {
+            if (error) {
+                reject(error);
+            } else {
+                resolve(result);
+            }
+        });
+    });
+}
+
 const paginaRegistro = (req, res) => {
     res.render('registro', {
         style: ['login.css']
@@ -23,9 +35,10 @@ const registrarUsuario = async (req, res) => {
 
 
     if (!controlError.isEmpty()) {
-        return res.render('error', {
-            errores: '1. ERROR EN LOS DATOS INGRESADOS'
-        })
+        return res.render('datosCargados', {
+            style: ['index.css'],
+            mensaje: "ERROR - Los datos ingresados no tienen el formato esperado"
+        });
     }
 
     console.log('PUNTO DE CONTROL 0');
@@ -65,8 +78,9 @@ const registrarUsuario = async (req, res) => {
 
         // Si el dni no está cargado en la db, no se puede registrar una cuenta
         if (!usuario) {
-            res.render('error', {
-                errores: 'Su DNI no está registrado en nuestra base de datos de alumnos. Por favor diríjase a Ibarbalz 1052, Barrio General Paz para efectuar su inscripción.'
+            res.render('datosCargados', {
+                style: ['index.css'],
+                mensaje: "ERROR - Su DNI no está registrado en nuestra base de datos de alumnos. Por favor diríjase a Ibarbalz 1052, Barrio General Paz para efectuar su inscripción."
             });
         }
         console.log('PUNTO DE CONTROL 2');
@@ -79,8 +93,9 @@ const registrarUsuario = async (req, res) => {
 
         // Si existe el dni y la contraseña, el usuario ya está registrado
         if (usuario.dniAlumno && usuario.password !== null) {
-            return res.render('error', {
-                errores: 'El usuario ya está registrado'
+            return res.render('datosCargados', {
+                style: ['index.css'],
+                mensaje: "ERROR - El usuario ya se encuentra registrado"
             });
         }
         console.log('PUNTO DE CONTROL 3');
@@ -88,7 +103,25 @@ const registrarUsuario = async (req, res) => {
 
         // guardo el usuario (solo contra) en la base de datos de alumnos
         const sqlQuery2 = `UPDATE alumnos SET password = '${newUser.password}' WHERE dniAlumno = ${dni}`;
-        connection.query(sqlQuery2, newUser, (err, result) => {
+        
+        query(sqlQuery2, newUser)
+            .then(result => {
+                console.log('SE REGISTRÓ EL USUARIOOO');
+                res.render('datosCargados', {
+                    style: ['index.css'],
+                    mensaje: "¡Tu usuario fue registrado con éxito!"
+                });
+            })
+            .catch(err => {
+                console.log('Error al LEER los datos');
+                console.log(err);
+                res.render('datosCargados', {
+                    style: ['index.css'],
+                    mensaje: "ERROR - No se pudo registrar tu usuario correctamente"
+                });
+            });
+        
+        /* connection.query(sqlQuery2, newUser, (err, result) => {
             if (err) {
                 console.log('Error al insertar los datos');
                 console.log(err);
@@ -102,16 +135,17 @@ const registrarUsuario = async (req, res) => {
                     style: ['index.css']
                 });
             }
-        });
+        }); */
         console.log('PUNTO DE CONTROL 4');
 
 
     } catch (error) {
         console.log('PUNTO DE CONTROL 5');
         console.log(error);
-        res.render('error', {
-            errores: '2. ERROR EN LOS DATOS INGRESADOS'
-        })
+        res.render('datosCargados', {
+            style: ['index.css'],
+            mensaje: "ERROR - Hubo un error en los datos ingresados"
+        });
     }
 };
 

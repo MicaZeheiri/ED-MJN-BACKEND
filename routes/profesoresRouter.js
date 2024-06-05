@@ -8,6 +8,8 @@ const { paginaListarProfesores,
         paginaEliminarProfesor
         } = require('../controllers/profesoresController');
 
+
+// Corresponde a /admin/profesores
 router.get('/', paginaListarProfesores);
 
 router.get('/nuevoProfesor', paginaNuevoProfesor);

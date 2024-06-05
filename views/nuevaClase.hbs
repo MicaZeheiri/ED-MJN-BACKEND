@@ -162,8 +162,7 @@
 <script src="/js/adminClases.js"></script>
 
 
-
-{{!-- <script>
+<script>
     const btnAgregarDia = document.getElementById('btn-agregar-dia');
     const contenedorDiasExtra = document.getElementById('dias-extra');
 
@@ -198,100 +197,4 @@
     });
 </script>
 
-<script>
-    (() => {
-        'use strict'
 
-        // Función para validar las horas
-        const validarHoras = () => {
-            const horasInicio = document.querySelectorAll('input[name="horaInicio"]');
-            const horasFin = document.querySelectorAll('input[name="horaFin"]');
-            let horasValidas = true; // Variable para controlar si todas las horas son válidas
-
-            for (let i = 0; i < horasInicio.length; i++) {
-                const horaInicio = horasInicio[i].value;
-                const horaFin = horasFin[i].value;
-
-                if (!(horaInicio < horaFin)) {
-                    horasValidas = false;
-                    // Marcar los campos de horaInicio y horaFin en rojo si las horas no son válidas
-                    horasInicio[i].classList.add('is-invalid');
-                    horasFin[i].classList.add('is-invalid');
-                } else {
-                    // Remover la clase de inválido si las horas son válidas
-                    horasInicio[i].classList.remove('is-invalid');
-                    horasFin[i].classList.remove('is-invalid');
-                }
-            }
-
-            return horasValidas; // Retornar true si todas las horas son válidas, false de lo contrario
-        };
-
-        // Fetch all the forms we want to apply custom Bootstrap validation styles to
-        const forms = document.querySelectorAll('.needs-validation')
-
-        // Loop over them and prevent submission
-        Array.from(forms).forEach(form => {
-            form.addEventListener('submit', event => {
-                // Validar el formulario con Bootstrap y las horas
-                if (!form.checkValidity() || !validarHoras()) {
-                    event.preventDefault()
-                    event.stopPropagation()
-                }
-
-                // Marcar el formulario como validado
-                form.classList.add('was-validated');
-
-                // Si las horas no son válidas, quitar la clase was-validated para restablecer los estilos
-                if (!validarHoras()) {
-                    form.classList.remove('was-validated');
-                }
-            }, false)
-        })
-    })();
-
-</script>
- --}}
-
-{{!--
-<script>
-    const validarHoras = () => {
-        const horasInicio = document.querySelectorAll('input[name="horaInicio"]');
-        const horasFin = document.querySelectorAll('input[name="horaFin"]');
-
-        console.log('HORAS: ', horasInicio, horasFin);
-        for (let i = 0; i < horasInicio.length; i++) {
-            const horaInicio = horasInicio[i].value;
-            const horaFin = horasFin[i].value;
-
-            if (horaInicio < horaFin) {
-                console.log('HORA CONTROLADA: ' + horaInicio + horaFin)
-                console.log('HORAS JOYA ', true);
-            } else {
-                console.log('HORA CONTROLADA: ' + horaInicio + horaFin)
-                console.log('HORAS JOYA', false);
-            }
-        }
-    }
-</script>
-<script>
-    // de bootstrap
-    (() => {
-        'use strict'
-
-        // Fetch all the forms we want to apply custom Bootstrap validation styles to
-        const forms = document.querySelectorAll('.needs-validation')
-
-        // Loop over them and prevent submission
-        Array.from(forms).forEach(form => {
-            form.addEventListener('submit', event => {
-                if (!form.checkValidity()) {
-                    event.preventDefault()
-                    event.stopPropagation()
-                }
-
-                form.classList.add('was-validated')
-            }, false)
-        })
-    })()
-</script> --}}

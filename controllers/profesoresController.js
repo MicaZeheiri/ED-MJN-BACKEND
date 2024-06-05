@@ -32,7 +32,10 @@ const paginaListarProfesores = (req, res) => {
         .catch(err => {
             console.log('Error al LEER los datos');
             console.log(err);
-            res.send('Error al LEER los datos');
+            res.render('datosCargados', {
+                style: ['index.css'],
+                mensaje: "ERROR - No se pudieron obtener los datos de los profesores"
+            });
         });
 
 }
@@ -70,13 +73,17 @@ const formNuevoProfesor = (req, res) => {
     query(sqlQuery, datosSql)
         .then(result => {
             res.render('datosCargados', {
-                style: ['index.css']
+                style: ['index.css'],
+                mensaje: "¡Los datos del nuevo profesor fueron registrados con éxito!"
             });
         })
         .catch(err => {
             console.log('Error al LEER los datos');
             console.log(err);
-            res.send('Error al LEER los datos');
+            res.render('datosCargados', {
+                style: ['index.css'],
+                mensaje: "ERROR - No se pudieron registrar los datos del profesor correctamente"
+            });
         });
 }
 
@@ -110,7 +117,10 @@ const paginaEditarProfesor = (req, res) => {
 
     }).catch(error => {
         console.error('Error al ejecutar consultas:', error);
-        res.status(500).send('Error al ejecutar consultas');
+        res.render('datosCargados', {
+            style: ['index.css'],
+            mensaje: "ERROR - No se pudieron obtener los datos del profesor seleccionado"
+        });
     });
 
     /* query(sqlQuery)
@@ -157,13 +167,17 @@ const formEditarProfesor = (req, res) => {
     query(sqlQuery, datosSql)
         .then(result => {
             res.render('datosCargados', {
-                style: ['index.css']
+                style: ['index.css'],
+                mensaje: "¡Los datos del profesor fueron registrados con éxito!"
             });
         })
         .catch(err => {
             console.log('Error al LEER los datos');
             console.log(err);
-            res.send('Error al LEER los datos');
+            res.render('datosCargados', {
+                style: ['index.css'],
+                mensaje: "ERROR - No se pudieron registrar los datos del profesor correctamente"
+            });
         });
 };
 
@@ -175,12 +189,18 @@ const paginaEliminarProfesor = (req, res) => {
 
     query(sqlQuery)
         .then(result => {
-            res.redirect('/admin/profesores')
+            res.render('datosCargados', {
+                style: ['index.css'],
+                mensaje: "¡El profesor seleccionado fue eliminado con éxito!"
+            });
         })
         .catch(err => {
             console.log('Error al LEER los datos');
             console.log(err);
-            res.send('Error al LEER los datos');
+            res.render('datosCargados', {
+                style: ['index.css'],
+                mensaje: "ERROR - No se pudo eliminar el profesor seleccionado"
+            });
         });
 };
 
