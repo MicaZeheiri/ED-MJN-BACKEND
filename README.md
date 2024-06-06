@@ -67,15 +67,15 @@ npm i
 ```
 ### Paso 3: Configurar Variables de Entorno
 Crea un archivo .env en el directorio raíz del proyecto y agrega las siguientes variables de entorno. Asegúrate de reemplazar los valores con tus propias configuraciones:
-PORT=número-de-puerto-de-ejecución
-PORTSQL=número-de-puerto-sql
-USERSQL=usuario-de-sql
-PASSWORDSQL=contaseña-de-sql
-HOSTSQL=nombre-host-de-sql
-DATASQL=nombre-base-de-datos
-MAIL_EMPRESA="tu_correo@ejemplo.com"
-PASS_MAIL_EMPRESA="código-del-mail-para-envio-automático"
-SECRET_KEY="clave-secreta-para-sesiones"
+- PORT=número-de-puerto-de-ejecución
+- PORTSQL=número-de-puerto-sql
+- USERSQL=usuario-de-sql
+- PASSWORDSQL=contaseña-de-sql
+- HOSTSQL=nombre-host-de-sql
+- DATASQL=nombre-base-de-datos
+- MAIL_EMPRESA="tu_correo@ejemplo.com"
+- PASS_MAIL_EMPRESA="código-del-mail-para-envio-automático"
+- SECRET_KEY="clave-secreta-para-sesiones"
 
 ### Paso 4: Configurar la Base de Datos
 Asegúrate de tener una base de datos MySQL configurada. Luego, crea la base de datos y las tablas necesarias. Usa el archivo de script SQL "Database.sql" que está en la carpeta "models" para crear las tablas y realizar los INSERT de datos necesarios para el funcionamiento correcto de la página.
