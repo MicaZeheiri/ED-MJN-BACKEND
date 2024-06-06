@@ -35,7 +35,7 @@ const paginaListarClases = (req, res) => {
         JOIN 
             dias d ON h.dia = d.codDia
         LEFT JOIN
-            ClasePorAlumno ca ON c.ritmo = ca.ritmo AND c.nivel = ca.nivel
+            clasePorAlumno ca ON c.ritmo = ca.ritmo AND c.nivel = ca.nivel
         GROUP BY 
             r.nombreRitmo, n.nombreNivel
         ORDER BY 
