@@ -1,8 +1,6 @@
 const calcularMontoAPagar = () => {
     let precioXalumno = document.getElementById('precioXalumno').value;
     let tabla = document.getElementById('tablaSueldo');
-    console.log(tabla)
-
     let filas = tabla.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
 
     let sueldoTotal = 0;
@@ -16,11 +14,9 @@ const calcularMontoAPagar = () => {
         let montoPagar = precioXalumno * cantAlumnos;
         sueldoTotal += montoPagar;
 
-        montoPagarElement.textContent = montoPagar.toFixed(2);
-
+        montoPagarElement.textContent = montoPagar;
     }
-    console.log(sueldoTotal);
-    document.getElementById('sueldoTotal').textContent = sueldoTotal.toFixed(2);
+    document.getElementById('sueldoTotal').textContent = sueldoTotal;
 };
 
 document.addEventListener('DOMContentLoaded', function () {

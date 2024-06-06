@@ -28,7 +28,6 @@ const paginaListarCuotas = (req, res) => {
     query(sqlQuery)
         .then((result) => {
             const cuotas = result;
-            console.log(cuotas);
 
             res.render('listarCuotas', {
                 style: ['clases.css', 'contacto.css'],
@@ -55,12 +54,8 @@ const paginaNuevaCuota = (req, res) => {
         query(sqlQuery2)
     ])
         .then(results => {
-            console.log(results);
             const alumnos = results[0];
             const meses = results[1];
-
-            console.log(alumnos);
-            console.log(meses);
 
             res.render('registrarCuota', {
                 style: ['contacto.css'],
@@ -98,7 +93,6 @@ const formNuevaCuota = (req, res) => {
         mes: mes,
         monto: monto
     };
-    console.log(datosSql);
 
     query(sqlQuery, datosSql)
         .then(result => {

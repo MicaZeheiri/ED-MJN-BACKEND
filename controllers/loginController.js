@@ -2,19 +2,6 @@ const connection = require('../models/config');
 const { validationResult } = require('express-validator');
 const bcrypt = require('bcrypt');
 
-function query(sql, datosSql) {
-    return new Promise((resolve, reject) => {
-        connection.query(sql, datosSql, (error, result) => {
-            if (error) {
-                reject(error);
-            } else {
-                resolve(result);
-            }
-        });
-    });
-};
-
-
 const paginaLogin = (req, res) => {
     res.render('login', {
         style: ['login.css']
@@ -26,7 +13,6 @@ const loginUsuario = async (req, res) => {
     const controlError = validationResult(req);
 
     const { dni, password, tipoUsuario } = req.body;
-    console.log('DATOS:', dni, password, tipoUsuario);
     const isAdmin = tipoUsuario === "administrador";
 
     if (!controlError.isEmpty()) {
@@ -36,12 +22,8 @@ const loginUsuario = async (req, res) => {
         });
     };
 
-    console.log('PUNTO DE CONTROL INICIAL');
-
 
     try {
-        console.log('PUNTO DE CONTROL 0');
-
         let usuario
 
         const sqlQueryAlumno = `    SELECT alumnos.dniAlumno, alumnos.password 
@@ -50,11 +32,7 @@ const loginUsuario = async (req, res) => {
 
         const sqlQueryAdmin = `SELECT * FROM administradores WHERE dniAdmin = ${dni}`
 
-        console.log('DATOS isadmin:', isAdmin);
-
         if (!isAdmin) {
-            console.log('PUNTO DE CONTROL alumno');
-
             // Manejo de login si seleccionó la opción Alumno
             usuario = await new Promise((resolve, reject) => {
                 connection.query(sqlQueryAlumno, (err, result) => {
@@ -80,8 +58,6 @@ const loginUsuario = async (req, res) => {
 
             // Si está registrado como alumno pero no como usuario
             if (usuario.dniAlumno && usuario.password === null) {
-                console.log('PUNTO DE CONTROL 2');
-                // Hacer render de registro
                 res.render('datosCargados', {
                     style: ['index.css'],
                     mensaje: "ERROR - El usuario no existe, por favor regístrese"
@@ -89,7 +65,6 @@ const loginUsuario = async (req, res) => {
             }
 
             // El alumno está registrado como usuario
-            console.log(usuario.dniAlumno, usuario.password);
             const match = await bcrypt.compare(password, usuario.password)
 
             if (match) {
@@ -105,13 +80,7 @@ const loginUsuario = async (req, res) => {
                 });
             }
 
-
-            console.log('Usuario logueado: ', usuario, match);
-
         } else {
-
-            console.log('PUNTO DE CONTROL else');
-
             // Manejo de login si seleccionó la opción Administrador
             usuario = await new Promise((resolve, reject) => {
                 connection.query(sqlQueryAdmin, (err, result) => {
@@ -121,7 +90,6 @@ const loginUsuario = async (req, res) => {
                         reject(err);
                     } else {
                         resolve(result[0]);
-                        //console.log('resultado: '+ JSON.stringify(result));
                     }
                 });
             });
@@ -134,8 +102,6 @@ const loginUsuario = async (req, res) => {
                 });
             }
 
-
-            console.log('USUARIO: ', usuario.dniAdmin, usuario.password);
             const match = await bcrypt.compare(password, usuario.password)
 
             // Está registrado como administrador
@@ -155,7 +121,6 @@ const loginUsuario = async (req, res) => {
         }
 
     } catch (error) {
-        console.log('PUNTO DE CONTROL 5');
         console.log(error);
         res.render('datosCargados', {
             style: ['index.css'],

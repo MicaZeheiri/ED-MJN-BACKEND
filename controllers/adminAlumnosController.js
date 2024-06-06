@@ -10,7 +10,8 @@ function query(sql, datosSql) {
             }
         });
     });
-}
+};
+
 
 const paginaListarAlumnos = (req, res) => {
 
@@ -37,7 +38,7 @@ const paginaListarAlumnos = (req, res) => {
                 mensaje: "ERROR - No se pudieron obtener los datos de los alumnos"
             });
         });
-}
+};
 
 const paginaEditarAlumno = (req, res) => {
     const dniAlumno = parseInt(req.query.dniAlumno);
@@ -51,7 +52,7 @@ const paginaEditarAlumno = (req, res) => {
                         DATE_FORMAT(fechaNacimiento, '%Y-%m-%d') AS fechaNacimiento, 
                         emailAlumno
                         FROM alumnos 
-                        WHERE dniAlumno = '${dniAlumno}'`
+                        WHERE dniAlumno = '${dniAlumno}'`;
 
     const sqlQuery2 = `
                         SELECT 
@@ -75,11 +76,10 @@ const paginaEditarAlumno = (req, res) => {
         query(sqlQuery2)
     ])
         .then(results => {
-            console.log(JSON.stringify(results));
+
             const alumno = results[0][0];
             const clases = results[1];
-            console.log('ALUMNO: ' + JSON.stringify(alumno));
-            console.log('Clases: ' + JSON.stringify(clases));
+
             res.render('editarAlumno', {
                 style: ['contacto.css', 'clases.css'],
                 alumno: alumno,
@@ -93,27 +93,7 @@ const paginaEditarAlumno = (req, res) => {
                 mensaje: "ERROR - No se pudieron obtener los datos del alumno seleccionado"
             });
         });
-
-    /* query(sqlQuery)
-        .then(results => {
-            const alumno = results[0];
-
-            console.log('ALUMNO: ' + JSON.stringify(alumno));
-
-            res.render('editarAlumno', {
-                style: ['contacto.css'],
-                alumno: alumno
-            });
-        })
-        .catch(error => {
-            console.error('Error al ejecutar consultas:', error);
-            res.render('datosCargados', {
-                style: ['index.css'],
-                mensaje: "ERROR - No se pudieron obtener los datos del alumno seleccionado"
-            });
-        }); */
 };
-
 
 const formEditarAlumno = (req, res) => {
     const dniOriginal = parseInt(req.body.dniOriginal);
@@ -123,9 +103,6 @@ const formEditarAlumno = (req, res) => {
     const fechaNacimiento = req.body.fechaNacimiento;
     const telefono = parseInt(req.body.telefono);
     const email = req.body.email;
-
-    console.log('Alumno EDITADO: ', dni, nombre, apellido, telefono, email, fechaNacimiento);
-
 
     const sqlQuery = `UPDATE alumnos SET ? WHERE dniAlumno = '${dniOriginal}'`;
 
@@ -159,8 +136,6 @@ const paginaDarBajaClase = (req, res) => {
     const dniAlumno = req.query.dniAlumno;
     const nombreRitmo = req.query.ritmo;
     const nombreNivel = req.query.nivel;
-    console.log('CLASE A BORRAR: ', nombreRitmo, nombreNivel, dniAlumno);
-
 
     const sqlQuery1 = `SELECT ritmos.codRitmo FROM ritmos WHERE ritmos.nombreRitmo = '${nombreRitmo}'`;
     const sqlQuery2 = `SELECT niveles.codNivel FROM niveles WHERE niveles.nombreNivel = '${nombreNivel}'`;
@@ -176,7 +151,6 @@ const paginaDarBajaClase = (req, res) => {
         .then(results => {
             codRitmo = results[0][0].codRitmo;
             codNivel = results[1][0].codNivel;
-            console.log('codigos ritmo y nivel: ' + codRitmo + ' ' + codNivel);
 
             const sqlQuery3 = `DELETE FROM clasePorAlumno WHERE ritmo = ${codRitmo} AND nivel = ${codNivel} AND dniAlumno = '${dniAlumno}'`;
             query(sqlQuery3)
@@ -201,9 +175,8 @@ const paginaDarBajaClase = (req, res) => {
                 mensaje: "ERROR - No se pudo obtener los datos necesarios para dar de baja al alumno en la clase seleccionada"
             });
         });
+};
 
-
-}
 
 module.exports = {
     paginaListarAlumnos,

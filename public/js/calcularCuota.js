@@ -1,9 +1,7 @@
 // Cálculo de la cuota
 const calcularCuota = () => {
     let tabla = document.getElementById('tablaCuotas');
-    console.log(tabla);
     let filas = tabla.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
-    console.log(filas);
     let montoTotal = 0;
 
     for (let i = 0; i < filas.length; i++) {
@@ -13,16 +11,13 @@ const calcularCuota = () => {
             let precioXclase = parseInt(fila.querySelector('.precioIndividual').textContent);
             montoTotal += precioXclase;
         }
-
     }
-    console.log(montoTotal);
     document.getElementById('cuotaTotal').textContent = montoTotal;
 };
 
 document.addEventListener('DOMContentLoaded', function () {
     calcularCuota();
 });
-
 
 
 // Modal de baja de clase
@@ -43,8 +38,6 @@ tabla.addEventListener('click', (e) => {
         const nivel = fila.querySelector('td:nth-child(2)').innerText;
         const ritmoCodificado = encodeURIComponent(ritmo);
         const nivelCodificado = encodeURIComponent(nivel);
-
-        console.log(nombre, apellido, ritmo, nivel, ritmoCodificado);
 
         let textoModal = `<p>¿Está seguro que desea dar de baja a ${nombre} ${apellido} de la clase ${ritmo} - ${nivel}?</p>`;
         modalBody.innerHTML = textoModal;

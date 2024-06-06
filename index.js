@@ -77,6 +77,13 @@ app.get('/', (req, res) => {
     });
 });
 
+// Ruta de la página de error
+app.get('/*', (req, res) => {
+    res.render('error', {
+        style: ['index.css']
+    });
+});
+
 module.exports = app;
 
 

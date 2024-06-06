@@ -22,9 +22,7 @@ const paginaRegistro = (req, res) => {
 
 
 const registrarUsuario = async (req, res) => {
-
     const controlError = validationResult(req);
-    console.log('primer error: ', controlError);
 
     const { dni, password } = req.body;
 
@@ -33,7 +31,6 @@ const registrarUsuario = async (req, res) => {
         password: password
     }
 
-
     if (!controlError.isEmpty()) {
         return res.render('datosCargados', {
             style: ['index.css'],
@@ -41,25 +38,14 @@ const registrarUsuario = async (req, res) => {
         });
     }
 
-    console.log('PUNTO DE CONTROL 0');
-
-
     try {
 
         let usuario
-        const sqlQuery = `SELECT alumnos.dniAlumno, alumnos.password 
-        FROM alumnos 
-        WHERE dniAlumno = ${dni}`
-/*         connection.query(sqlQuery, (err, result) => {
-            if (err) {
-                console.log('Error al leer los datos');
-                console.log(err);
-                res.send('Error al leer los datos');
-            } else {
-                usuario = result[0];
-                console.log('El usuario es: ', usuario);
-            }
-        }); */
+        const sqlQuery = `
+                            SELECT alumnos.dniAlumno, alumnos.password 
+                            FROM alumnos 
+                            WHERE dniAlumno = ${dni}`;
+
 
         usuario = await new Promise((resolve, reject) => {
             connection.query(sqlQuery, (err, result) => {
@@ -72,9 +58,6 @@ const registrarUsuario = async (req, res) => {
                 }
             });
         });
-        
-        console.log('PUNTO DE CONTROL 1');
-
 
         // Si el dni no está cargado en la db, no se puede registrar una cuenta
         if (!usuario) {
@@ -82,14 +65,10 @@ const registrarUsuario = async (req, res) => {
                 style: ['index.css'],
                 mensaje: "ERROR - Su DNI no está registrado en nuestra base de datos de alumnos. Por favor diríjase a Ibarbalz 1052, Barrio General Paz para efectuar su inscripción."
             });
-        }
-        console.log('PUNTO DE CONTROL 2');
+        };
 
-        const salt = await bcrypt.genSalt(10)
-        console.log(salt);
-        newUser.password = bcrypt.hashSync(password, salt)
-        console.log('Contraseña: ', newUser.password);
-
+        const salt = await bcrypt.genSalt(10);
+        newUser.password = bcrypt.hashSync(password, salt);
 
         // Si existe el dni y la contraseña, el usuario ya está registrado
         if (usuario.dniAlumno && usuario.password !== null) {
@@ -97,16 +76,13 @@ const registrarUsuario = async (req, res) => {
                 style: ['index.css'],
                 mensaje: "ERROR - El usuario ya se encuentra registrado"
             });
-        }
-        console.log('PUNTO DE CONTROL 3');
-
+        };
 
         // guardo el usuario (solo contra) en la base de datos de alumnos
         const sqlQuery2 = `UPDATE alumnos SET password = '${newUser.password}' WHERE dniAlumno = ${dni}`;
-        
+
         query(sqlQuery2, newUser)
             .then(result => {
-                console.log('SE REGISTRÓ EL USUARIOOO');
                 res.render('datosCargados', {
                     style: ['index.css'],
                     mensaje: "¡Tu usuario fue registrado con éxito!"
@@ -120,33 +96,14 @@ const registrarUsuario = async (req, res) => {
                     mensaje: "ERROR - No se pudo registrar tu usuario correctamente"
                 });
             });
-        
-        /* connection.query(sqlQuery2, newUser, (err, result) => {
-            if (err) {
-                console.log('Error al insertar los datos');
-                console.log(err);
-                res.send('Error al insertar los datos')
-            } else {
-                console.log('Datos ingresados correctamente');
-                console.log(result);
-
-                // sacar
-                res.render('datosCargados', {
-                    style: ['index.css']
-                });
-            }
-        }); */
-        console.log('PUNTO DE CONTROL 4');
-
 
     } catch (error) {
-        console.log('PUNTO DE CONTROL 5');
         console.log(error);
         res.render('datosCargados', {
             style: ['index.css'],
             mensaje: "ERROR - Hubo un error en los datos ingresados"
         });
-    }
+    };
 };
 
 module.exports = {

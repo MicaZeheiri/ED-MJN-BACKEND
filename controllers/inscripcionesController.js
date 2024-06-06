@@ -74,7 +74,6 @@ const paginaInscripcionClases = (req, res) => {
         query(sqlQuery),
         query(sqlQuery2)
     ]).then(results => {
-        console.log(results);
         const clases = results[0];
         const alumnos = results[1];
 
@@ -90,8 +89,7 @@ const paginaInscripcionClases = (req, res) => {
             mensaje: "ERROR - No se pudieron obtener los datos necesarios para la inscripción a clases"
         });
     });
-
-}
+};
 
 const formInscripcionClases = (req, res) => {
     const dni = req.body.dni;
@@ -101,8 +99,6 @@ const formInscripcionClases = (req, res) => {
         const [nombreRitmo, nombreNivel] = valor.split('-');
         return { nombreRitmo, nombreNivel };
     });
-
-    console.log('Clases separadas:', clasesSeparadas);
 
     let nombreRitmo
     let nombreNivel
@@ -136,24 +132,9 @@ const formInscripcionClases = (req, res) => {
                     mensaje: "ERROR - No se pudo registrar la inscripción a clases del alumno correctamente"
                 });
             });
-
-
-        /* connection.query(sqlQuery, datosSql, (err, result) => {
-            if (err) {
-                console.log('Error al insertar los datos');
-                console.log(err);
-                res.send('Error al insertar los datos')
-            } else {
-                console.log('Datos ingresados correctamente');
-                console.log(result);
-                res.render('datosCargados', {
-                    style: ['index.css']
-                });
-            }
-        }); */
     });
 
-}
+};
 
 module.exports = {
     paginaInscripcionAlumno,

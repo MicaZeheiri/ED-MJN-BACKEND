@@ -7,7 +7,7 @@ document.getElementById('enviarConsulta').addEventListener('click', (e) => {
             algunaSeleccionada = true;
             break;
         }
-    }
+    };
 
     if (!algunaSeleccionada) {
         alert('Por favor, selecciona al menos una clase.');

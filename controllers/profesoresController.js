@@ -38,7 +38,7 @@ const paginaListarProfesores = (req, res) => {
             });
         });
 
-}
+};
 
 const paginaNuevoProfesor = (req, res) => {
     res.render('nuevoProfesor', {
@@ -54,9 +54,6 @@ const formNuevoProfesor = (req, res) => {
     const email = req.body.email;
     const precioXalumno = parseInt(req.body.precioXalumno);
 
-    console.log('datos: ', dni, nombre, apellido, telefono, email, precioXalumno);
-
-
     const sqlQuery = `INSERT INTO profesores SET ?`;
 
     const datosSql = {
@@ -67,8 +64,6 @@ const formNuevoProfesor = (req, res) => {
         emailProfesor: email,
         precioXalumno: precioXalumno
     };
-
-    console.log('datossql:', datosSql);
 
     query(sqlQuery, datosSql)
         .then(result => {
@@ -85,12 +80,12 @@ const formNuevoProfesor = (req, res) => {
                 mensaje: "ERROR - No se pudieron registrar los datos del profesor correctamente"
             });
         });
-}
+};
 
 const paginaEditarProfesor = (req, res) => {
     const dniProfesor = req.query.dniProfesor;
 
-    const sqlQuery = `SELECT * FROM profesores WHERE dniProfesor = '${dniProfesor}'`
+    const sqlQuery = `SELECT * FROM profesores WHERE dniProfesor = '${dniProfesor}'`;
     const sqlQuery2 = `
                         SELECT CONCAT(r.nombreRitmo, ' - ', n.nombreNivel) AS clase, COUNT(ca.dniAlumno) AS cantAlumnos
                         FROM clases c 
@@ -98,14 +93,13 @@ const paginaEditarProfesor = (req, res) => {
                         JOIN ritmos r ON c.ritmo = r.codRitmo 
                         JOIN niveles n ON c.nivel = n.codNivel 
                         WHERE profesor = '${dniProfesor}'
-                        GROUP BY c.ritmo, c.nivel;`
+                        GROUP BY c.ritmo, c.nivel;`;
 
 
     Promise.all([
         query(sqlQuery),
         query(sqlQuery2)
     ]).then(results => {
-        console.log(JSON.stringify(results));
         const profesor = results[0][0];
         const sueldo = results[1];
         res.render('editarProfesor', {
@@ -113,8 +107,6 @@ const paginaEditarProfesor = (req, res) => {
             profesor: profesor,
             sueldo: sueldo
         });
-        
-
     }).catch(error => {
         console.error('Error al ejecutar consultas:', error);
         res.render('datosCargados', {
@@ -122,22 +114,6 @@ const paginaEditarProfesor = (req, res) => {
             mensaje: "ERROR - No se pudieron obtener los datos del profesor seleccionado"
         });
     });
-
-    /* query(sqlQuery)
-        .then(results => {
-            const profesor = results[0];
-
-            console.log('PROFESOR: ' + JSON.stringify(profesor));
-
-            res.render('editarProfesor', {
-                style: ['contacto.css'],
-                profesor: profesor,
-
-            });
-        }).catch(error => {
-            console.error('Error al ejecutar consultas:', error);
-            res.status(500).send('Error al ejecutar consultas');
-        }); */
 };
 
 
@@ -149,9 +125,6 @@ const formEditarProfesor = (req, res) => {
     const telefono = parseInt(req.body.telefono);
     const email = req.body.email;
     const precioXalumno = parseInt(req.body.precioXalumno);
-
-    console.log('PROFE EDITADO: ', dni, nombre, apellido, telefono, email, precioXalumno);
-
 
     const sqlQuery = `UPDATE profesores SET ? WHERE dniProfesor = '${dniOriginal}'`;
 
@@ -183,7 +156,6 @@ const formEditarProfesor = (req, res) => {
 
 const paginaEliminarProfesor = (req, res) => {
     const dniProfesor = req.query.dniProfesor;
-    console.log('PROFE A BORRAR: ', dniProfesor);
 
     const sqlQuery = `DELETE FROM profesores WHERE dniProfesor = ${dniProfesor}`;
 

@@ -15,8 +15,6 @@ function query(sql, datosSql) {
 
 const paginaListarClasesAlumno = (req, res) => {
     const usuario = req.session.usuario;
-    console.log('USUARIO ALUMNO', usuario);
-    console.log(usuario.dniUsuario);
     const dniAlumno = usuario.dniUsuario;
 
     const sqlQuery1 = `
@@ -68,25 +66,7 @@ const paginaListarClasesAlumno = (req, res) => {
                 mensaje: "ERROR - No se pudo obtener los datos necesarios para dar de baja al alumno en la clase seleccionada"
             });
         });
-
-    /* query(sqlQuery1)
-        .then(result => {
-            console.log('result', result);
-            res.render('alumno', {
-                style: ['alumno.css', 'index.css'],
-                clasesAlumno: result
-            });
-        })
-        .catch(err => {
-            console.log('Error al LEER los datos');
-            console.log(err);
-            res.render('datosCargados', {
-                style: ['index.css'],
-                mensaje: "ERROR - No se pudieron obtener los datos de tus clases"
-            });
-        }); */
-
-}
+};
 
 module.exports =
     paginaListarClasesAlumno;

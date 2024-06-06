@@ -4,7 +4,7 @@ const paginaContacto = (req, res) => {
     res.render('contacto', {
         style: ['contacto.css']
     });
-}
+};
 
 const paginaFormulario = (req, res) => {
     const nombre = req.body.nombre;
@@ -15,8 +15,8 @@ const paginaFormulario = (req, res) => {
 
     enviarMail(email, nombre, apellido, telefono, consulta).catch((error) => { console.log(error); });
 
-    res.redirect('/contacto')
-}
+    res.redirect('/contacto');
+};
 
 
 module.exports = {
