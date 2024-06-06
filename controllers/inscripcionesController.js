@@ -108,8 +108,8 @@ const formInscripcionClases = (req, res) => {
 
         const sqlQuery = `INSERT INTO clasePorAlumno (dniAlumno, ritmo, nivel)
                             SELECT ${dni},
-                            (SELECT codRitmo FROM Ritmos WHERE nombreRitmo = '${nombreRitmo}'),
-                            (SELECT codNivel FROM Niveles WHERE nombreNivel = '${nombreNivel}')`
+                            (SELECT codRitmo FROM ritmos WHERE nombreRitmo = '${nombreRitmo}'),
+                            (SELECT codNivel FROM niveles WHERE nombreNivel = '${nombreNivel}')`
 
         const datosSql = {
             dniAlumno: dni,

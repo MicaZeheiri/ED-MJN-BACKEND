@@ -64,9 +64,9 @@ const paginaNuevaClase = (req, res) => {
                         SELECT 
                             p.dniProfesor, 
                             CONCAT(p.nombreProfesor, ' ', p.apellidoProfesor) AS nombreProfesor
-                        FROM Profesores p`;
-    const sqlQuery2 = `SELECT ritmos.codRitmo, ritmos.nombreRitmo FROM Ritmos`;
-    const sqlQuery3 = `SELECT niveles.codNivel, niveles.nombreNivel FROM Niveles`;
+                        FROM profesores p`;
+    const sqlQuery2 = `SELECT ritmos.codRitmo, ritmos.nombreRitmo FROM ritmos`;
+    const sqlQuery3 = `SELECT niveles.codNivel, niveles.nombreNivel FROM niveles`;
     const sqlQuery4 = `SELECT dias.codDia, dias.nombreDia FROM dias`;
 
     Promise.all([
@@ -182,9 +182,9 @@ const paginaEditarClase = (req, res) => {
                         SELECT 
                             p.dniProfesor, 
                             CONCAT(p.nombreProfesor, ' ', p.apellidoProfesor) AS nombreProfesor
-                        FROM Profesores p`;
-    const sqlQuery2 = `SELECT ritmos.codRitmo, ritmos.nombreRitmo FROM Ritmos`;
-    const sqlQuery3 = `SELECT niveles.codNivel, niveles.nombreNivel FROM Niveles`;
+                        FROM profesores p`;
+    const sqlQuery2 = `SELECT ritmos.codRitmo, ritmos.nombreRitmo FROM ritmos`;
+    const sqlQuery3 = `SELECT niveles.codNivel, niveles.nombreNivel FROM niveles`;
     const sqlQuery4 = `SELECT dias.codDia, dias.nombreDia FROM dias`;
 
     Promise.all([

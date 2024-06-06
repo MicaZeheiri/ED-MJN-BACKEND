@@ -5,7 +5,7 @@ CREATE DATABASE estudioDanzaMJN;
 USE estudioDanzaMJN;
 
 -- CREACIÓN DE LAS TABLAS
-CREATE TABLE Alumnos(
+CREATE TABLE alumnos(
 dniAlumno bigint not null,
 nombreAlumno varchar(120),
 apellidoAlumno varchar(100),
@@ -16,7 +16,7 @@ password varchar(300),
 PRIMARY KEY(dniAlumno)
 );
 
-CREATE TABLE Profesores(
+CREATE TABLE profesores(
 dniProfesor bigint not null,
 nombreProfesor varchar(120),
 apellidoProfesor varchar(100),
@@ -26,47 +26,47 @@ precioXalumno smallint,
 PRIMARY KEY(dniProfesor)
 );
 
-CREATE TABLE Ritmos(
+CREATE TABLE ritmos(
 codRitmo tinyint auto_increment not null,
 nombreRitmo varchar(30),
 PRIMARY KEY(codRitmo)
 );
 
-CREATE TABLE Niveles(
+CREATE TABLE niveles(
 codNivel tinyint auto_increment not null,
 nombreNivel varchar(30),
 PRIMARY KEY(codNivel)
 );
 
-CREATE TABLE Meses(
+CREATE TABLE meses(
 numero tinyint auto_increment not null,
 nombreMes varchar(10),
 PRIMARY KEY(numero)
 );
 
-CREATE TABLE Dias(
+CREATE TABLE dias(
 codDia tinyint auto_increment not null,
 nombreDia varchar(10),
 PRIMARY KEY(codDia)
 );
 
-CREATE TABLE Administradores(
+CREATE TABLE administradores(
 dniAdmin bigint not null,
 password varchar(300),
 PRIMARY KEY(dniAdmin)
 );
 
-CREATE TABLE Clases(
+CREATE TABLE clases(
 ritmo tinyint not null,
 nivel tinyint not null,
 profesor bigint,
 PRIMARY KEY(ritmo, nivel),
-FOREIGN KEY(ritmo) REFERENCES Ritmos(codRitmo),
-FOREIGN KEY(nivel) REFERENCES Niveles(codNivel),
-FOREIGN KEY(profesor) REFERENCES Profesores(dniProfesor) ON UPDATE CASCADE
+FOREIGN KEY(ritmo) REFERENCES ritmos(codRitmo),
+FOREIGN KEY(nivel) REFERENCES niveles(codNivel),
+FOREIGN KEY(profesor) REFERENCES profesores(dniProfesor) ON UPDATE CASCADE
 );
 
-CREATE TABLE Horarios(
+CREATE TABLE horarios(
 idHorario int auto_increment not null,
 ritmo tinyint not null,
 nivel tinyint not null,
@@ -74,28 +74,28 @@ dia tinyint not null,
 horaInicio time,
 horaFin time,
 PRIMARY KEY(idHorario),
-FOREIGN KEY(ritmo, nivel) REFERENCES Clases(ritmo, nivel),
-FOREIGN KEY(dia) REFERENCES Dias(codDia)
+FOREIGN KEY(ritmo, nivel) REFERENCES clases(ritmo, nivel),
+FOREIGN KEY(dia) REFERENCES dias(codDia)
 );
 
-CREATE TABLE ClasePorAlumno(
+CREATE TABLE clasePorAlumno(
 dniAlumno bigint not null,
 ritmo tinyint not null,
 nivel tinyint not null,
 PRIMARY KEY(dniAlumno, ritmo, nivel),
-FOREIGN KEY(ritmo, nivel) REFERENCES Clases(ritmo, nivel),
-FOREIGN KEY(dniAlumno) REFERENCES Alumnos(dniAlumno)
+FOREIGN KEY(ritmo, nivel) REFERENCES clases(ritmo, nivel),
+FOREIGN KEY(dniAlumno) REFERENCES alumnos(dniAlumno)
 );
 
-CREATE TABLE Cuotas(
+CREATE TABLE cuotas(
 mes tinyint not null,
 anio year not null,
 dniAlumno bigint not null,
 montoPagado int,
 fechaDePago date,
 PRIMARY KEY(dniAlumno, mes, anio),
-FOREIGN KEY(mes) REFERENCES Meses(numero),
-FOREIGN KEY(dniAlumno) REFERENCES Alumnos(dniAlumno) ON UPDATE CASCADE
+FOREIGN KEY(mes) REFERENCES meses(numero),
+FOREIGN KEY(dniAlumno) REFERENCES alumnos(dniAlumno) ON UPDATE CASCADE
 );
 
 -- INSERCIÓN DE DATOS NECESARIOS
