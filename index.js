@@ -39,8 +39,9 @@ hbs.registerHelper('ifEqual', function(val1, val2, options) {
 });
 
 // Control de sesiones de usuario
+const SECRET_KEY = process.env.SECRET_KEY || 'secret-key';
 app.use(session({
-    secret: 'estudio-de-danza-mjn',
+    secret: SECRET_KEY,
     resave: false,
     saveUninitialized: false
 }));

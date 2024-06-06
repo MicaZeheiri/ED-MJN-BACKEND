@@ -14,7 +14,7 @@ const calcularMontoAPagar = () => {
         let montoPagar = precioXalumno * cantAlumnos;
         sueldoTotal += montoPagar;
 
-        montoPagarElement.textContent = montoPagar;
+        montoPagarElement.textContent = '$' + montoPagar;
     }
     document.getElementById('sueldoTotal').textContent = sueldoTotal;
 };
