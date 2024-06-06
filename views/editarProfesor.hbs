@@ -3,6 +3,7 @@
     <div class="container" style="max-width: 800px;">
         <form method="post" action="/admin/profesores/editarProfesor">
             <fieldset>
+                <legend>Profesor</legend>
                 <input class="invisible" name="dniOriginal" value="{{ profesor.dniProfesor }}">
                 <div class="row">
                     <div class="mb-3">
@@ -42,6 +43,7 @@
             </fieldset>
 
             <fieldset>
+                <legend class="mt-3">Sueldo</legend>
                 <div class="row">
                     <div class="mb-3">
                         <label for="precioXalumno" class="form-label">Precio a cobrar por alumno</label>
